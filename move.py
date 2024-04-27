@@ -31,4 +31,4 @@ def forward(num):
     GPIO.output(in3, GPIO.HIGH)
     GPIO.output(in4, GPIO.HIGH)
 
-
+forward(2)
