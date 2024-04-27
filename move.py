@@ -4,7 +4,7 @@ import time
 ena = PWMOutputDevice(12)
 enb = PWMOutputDevice(13)
 motor_a = Motor(forward=17, backward=27)
-motor_b = Motor(forward=22, backward=5)
+motor_b = Motor(forward=5, backward=22)
 
 ena.value = 1.0
 enb.value = 1.0
