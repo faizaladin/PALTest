@@ -43,11 +43,24 @@ def left(num):
     motor_a.stop()
     motor_b.stop()
 
-forward(2)
+forward(1.5)
 time.sleep(1)
-left(1.5)
+left(1.4)
 time.sleep(1)
-right(1.2)
-time.sleep(1.7)
-backward(2)
+
+forward(1.5)
+time.sleep(1)
+left(1.4)
+time.sleep(1)
+
+forward(1.5)
+time.sleep(1)
+left(1.4)
+time.sleep(1)
+
+forward(1.5)
+time.sleep(1)
+left(1.4)
+time.sleep(1)
+
 
