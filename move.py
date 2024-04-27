@@ -6,8 +6,8 @@ enb = PWMOutputDevice(13)
 motor_a = Motor(forward=17, backward=27)
 motor_b = Motor(forward=5, backward=22)
 
-ena.value = 0.5
-enb.value = 0.5
+ena.value = 0.25
+enb.value = 0.25
 
 def forward(num):
     motor_a.forward()
@@ -24,7 +24,7 @@ def backward(num):
     motor_b.stop()
 
 
-backward(3)
+backward(1)
 time.sleep(1)
-forward(2)
+forward(0.5)
 
