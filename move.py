@@ -25,13 +25,13 @@ def backward(num):
 
 def left(num):
     motor_a.forward()
-    #motor_b.backward()
+    motor_b.backward()
     time.sleep(num)
     motor_a.stop()
     motor_b.stop()
 
 def right(num):
-    #motor_a.backward()
+    motor_a.backward()
     motor_b.forward()
     time.sleep(num)
     motor_a.stop()
