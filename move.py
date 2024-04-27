@@ -45,9 +45,9 @@ def left(num):
 
 forward(2)
 time.sleep(1)
-left(1)
+left(1.5)
 time.sleep(1)
 right(1.2)
-time.sleep(1)
+time.sleep(1.7)
 backward(2)
 
