@@ -45,22 +45,22 @@ def left(num):
 
 forward(1.5)
 time.sleep(1)
-left(1.15)
+left(1.2)
 time.sleep(1)
 
 forward(1.5)
 time.sleep(1)
-left(1.15)
+left(1.2)
 time.sleep(1)
 
 forward(1.5)
 time.sleep(1)
-left(1.15)
+left(1.2)
 time.sleep(1)
 
 forward(1.5)
 time.sleep(1)
-left(1.15)
+left(1.2)
 time.sleep(1)
 
 
