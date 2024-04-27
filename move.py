@@ -24,7 +24,7 @@ def backward(num):
     motor_b.stop()
 
 
-backward(1)
+backward(3)
 time.sleep(1)
-forward(0.5)
+forward(3)
 
