@@ -26,8 +26,8 @@ def backward(num):
     motor_b.stop()
 
 def left(num):
-    ena.value = 1
-    enb.value = 1
+    ena.value = 0.75
+    enb.value = 0.75
     motor_a.forward()
     motor_b.backward()
     time.sleep(num)
@@ -35,8 +35,8 @@ def left(num):
     motor_b.stop()
 
 def right(num):
-    ena.value = 1
-    enb.value = 1
+    ena.value = 0.75
+    enb.value = 0.75
     motor_a.backward()
     motor_b.forward()
     time.sleep(num)
