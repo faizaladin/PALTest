@@ -113,21 +113,20 @@ if ret:
         average_x = sum(pt[0] for pt in red_points) / len(red_points)
         average_y = sum(pt[1] for pt in red_points) / len(red_points)
         average_point = (int(average_x), int(average_y))
+        point_on_grid = (int(average_x)-1250, 1980 - int(average_y))
 
         # Draw a blue dot at the average point
         cv2.circle(rotated_img, average_point, 5, (255, 0, 0), -1)  # Blue color
 
-        # Display the image with grid lines, detected lime green, red points, lime green filter, and blue dot
-        cv2.imshow('Rotated Original with Grid, Detected Lime Green, Red Points, Lime Green Filter, and Blue Dot', rotated_img)
-        cv2.waitKey(0)  # Wait for any key press to close the window
+    # Display the image with grid lines, detected lime green, red points, lime green filter, and blue dot
+    cv2.imshow('Rotated Original with Grid, Detected Lime Green, Red Points, Lime Green Filter, and Blue Dot', rotated_img)
+    cv2.waitKey(0)  # Wait for any key press to close the window
+    print("Bottom Left: (0,0)")
+    print("Bottom Right: (1350, 0)")
+    print("Top Left: (0, 1380")
+    print("Top Right: (1350, 1380")
+    print(f"Blue dot: {point_on_grid}")
 
-        # Release the video capture object and close all windows
-        cap.release()
-        cv2.destroyAllWindows()
-
-        # Return the coordinates of the blue dot
-        print("Blue Dot Coordinates:", average_point)
-    else:
-        print("No red points detected.")
-else:
-    print("Failed to capture frame from the camera.")
+# Release the video capture object and close all windows
+cap.release()
+cv2.destroyAllWindows()
