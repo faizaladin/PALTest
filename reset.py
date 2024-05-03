@@ -23,6 +23,6 @@ while robot_info[1] > 3 and robot_info[1] < 357:
 print("done")
 move.backward(6)
 move.forward(0.5, 0.5)
-move.left(1, 1)
+move.right(1, 1)
 move.backward(6)
 motor.stop()
