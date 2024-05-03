@@ -11,5 +11,6 @@ while robot_info[1] > 2 or robot_info[1] < 358:
         move.left(0.5, 1)
         move.stop()
     robot_info = testcamera.calculate_orientation()
+    print(robot_info)
 
 print(robot_info)
