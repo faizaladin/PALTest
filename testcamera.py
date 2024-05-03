@@ -263,3 +263,6 @@ def calculate_orientation():
     angle_deg = (90 - angle_deg) % 360
 
     return [robot_center, angle_deg]
+
+info = calculate_orientation()
+print(info)
