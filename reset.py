@@ -3,7 +3,7 @@ import time
 import testcamera
 import move 
 
-while true:
+while True:
     try:
         robot_info = testcamera.calculate_orientation()
         while robot_info[1] > 2 and robot_info[1] < 358:
