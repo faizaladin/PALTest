@@ -3,18 +3,21 @@ import time
 import testcamera
 import move 
 
-robot_info = testcamera.calculate_orientation()
+while true:
+    try:
+        robot_info = testcamera.calculate_orientation()
+    while robot_info[1] > 2 and robot_info[1] < 358:
+        print(robot_info)
+        if robot_info[1] > 90:
+            move.right(1/(robot_info[1]-90), 1)
+            move.stop()
+        else:
+            move.left(1/(robot_info[1]-90), 1)
+            move.stop()
+        robot_info = testcamera.calculate_orientation()
 
-while robot_info[1] > 2 and robot_info[1] < 358:
-    if robot_info[1] > 90:
-        move.right(0.5, 1)
+    except KeyboardInterrupt:
         move.stop()
-    else:
-        move.left(0.5, 1)
-        move.stop()
-    robot_info = testcamera.calculate_orientation()
-    print(robot_info)
-
-GPIO.cleanup()
+        GPIO.cleanup()
 
 print(robot_info)
