@@ -6,13 +6,13 @@ import move
 while True:
     try:
         robot_info = testcamera.calculate_orientation()
-        while robot_info[1] > 2 and robot_info[1] < 358:
+        while robot_info[1] > 5 and robot_info[1] < 355:
             print(robot_info)
             if robot_info[1] > 90:
-                move.right(1/(robot_info[1]-90), 1)
+                move.right(random.uniform(0.1, 1), 1)
                 move.stop()
             else:
-                move.left(1/(robot_info[1]-90), 1)
+                move.left(random.uniform(0.1, 1), 1)
                 move.stop()
             time.sleep(2)
             print("checking")
@@ -20,6 +20,5 @@ while True:
 
     except KeyboardInterrupt:
         move.stop()
-        GPIO.cleanup()
 
 print(robot_info)
