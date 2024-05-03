@@ -9,7 +9,7 @@ def detect_blue(image, region, rows, cols):
     row_step = region_height // rows
     col_step = region_width // cols
 
-    blue_coordinates = []
+    deep_blue_coordinates = []
 
     for i in range(rows):
         for j in range(cols):
@@ -24,23 +24,24 @@ def detect_blue(image, region, rows, cols):
             # Convert the ROI to HSV color space
             hsv_roi = cv2.cvtColor(roi, cv2.COLOR_BGR2HSV)
 
-            # Define the lower and upper bounds for the blue color in HSV
-            lower_blue = np.array([90, 50, 50])  # Adjusted lower bound
-            upper_blue = np.array([130, 255, 255])  # Adjusted upper bound
+            # Define the lower and upper bounds for the deep blue color in HSV
+            lower_deep_blue = np.array([90, 30, 10])  # Adjusted lower bound
+            upper_deep_blue = np.array([130, 255, 120])
 
-            # Threshold the HSV image to get only blue colors
-            mask = cv2.inRange(hsv_roi, lower_blue, upper_blue)
+            # Threshold the HSV image to get only deep blue colors
+            mask = cv2.inRange(hsv_roi, lower_deep_blue, upper_deep_blue)
 
-            # Check if there are any blue pixels in the ROI
+            # Check if there are any deep blue pixels in the ROI
             if np.any(mask):
-                # Find the coordinates of the blue pixel
-                rows_blue, cols_blue = np.where(mask > 0)
+                # Find the coordinates of the deep blue pixel
+                rows_deep_blue, cols_deep_blue = np.where(mask > 0)
                 # Convert coordinates to be relative to the entire image
-                blue_x = cell_x1 + np.mean(cols_blue)
-                blue_y = cell_y1 + np.mean(rows_blue)
-                blue_coordinates.append((int(blue_x), int(blue_y)))
+                deep_blue_x = cell_x1 + np.mean(cols_deep_blue)
+                deep_blue_y = cell_y1 + np.mean(rows_deep_blue)
+                deep_blue_coordinates.append((int(deep_blue_x), int(deep_blue_y)))
 
-    return blue_coordinates
+    return deep_blue_coordinates
+
 
 # Function to detect lime green within the specified grid space and return its coordinates
 def detect_lime_green(image, region, rows, cols):
@@ -171,7 +172,9 @@ def find_center_of_robot():
 
     return point_on_grid
 
-def find_center_of_blue():
+def find_center_of_blue(robot_center):
+
+    points_to_keep = []
 
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
@@ -202,7 +205,6 @@ def find_center_of_blue():
             if colony_region[0] <= coord[0] <= colony_region[2] and colony_region[1] <= coord[1] <= colony_region[3]:
                 cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
                 red_points.append(coord)  # Store red point coordinates
-
         # Apply blue filter
         lower_blue = np.array([90, 50, 50])  # Adjusted lower bound
         upper_blue = np.array([130, 255, 255])  # Adjusted upper bound
@@ -217,6 +219,20 @@ def find_center_of_blue():
             if colony_region[0] <= coord[1] <= colony_region[2] and colony_region[1] <= coord[0] <= colony_region[3]:
                 cv2.circle(rotated_img, (coord[1], coord[0]), 3, (0, 0, 255), -1)  # Red color
                 red_points.append((coord[1], coord[0]))  # Store red point coordinates
+
+        # Calculate distances of each red point from the robot center and store them with their respective points
+        distances_with_points = [(math.sqrt((coord[0] - robot_center[0]) ** 2 + (coord[1] - robot_center[1]) ** 2), coord) for coord in red_points]
+
+        # Sort the distances and points based on distances
+        sorted_distances_with_points = sorted(distances_with_points)
+
+        # Take only the closest 100 points with their distances
+        closest_100_points_with_distances = sorted_distances_with_points[:20]
+
+        # Extract only the points from the sorted list of closest points with distances
+        red_points = [point for (_, point) in closest_100_points_with_distances]
+
+        print(red_points)
 
         # Calculate the average of red points
         if red_points:
@@ -240,7 +256,7 @@ def find_center_of_blue():
 
 def calculate_orientation():
     robot_center = find_center_of_robot()
-    triangle_center = find_center_of_blue()
+    triangle_center = find_center_of_blue(robot_center)
     # Coordinates of corners
     top_left_corner = (1250, 600)
     bottom_left_corner = (0, 0)
