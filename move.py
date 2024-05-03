@@ -20,7 +20,7 @@ def forward(num, en_value):
 def pos_right(num):
     ena.value = 0.87
     enb.value = 0.87
-    motor_a.backward()
+    motor_a.forward()
     motor_b.backward()
     time.sleep(num)
 
