@@ -8,8 +8,8 @@ motor_b = Motor(forward=5, backward=22)
 
 
 def forward(num):
-    ena.value = 1
-    enb.value = 1
+    ena.value = 0.5
+    enb.value = 0.5
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
@@ -43,7 +43,8 @@ def left(num):
     motor_a.stop()
     motor_b.stop()
 
-forward(2)
+backward(2)
+
 # time.sleep(1)
 # left(1.2)
 # time.sleep(1)
