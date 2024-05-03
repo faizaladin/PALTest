@@ -39,7 +39,7 @@ def left(num, ena_value, enb_value):
     time.sleep(num)
 
 def curve_left_while_forward():
-    left(1, 0.05, 0.1) 
+    left(1, 0.05, 1) 
     stop()
 
 curve_left_while_forward()
