@@ -4,7 +4,7 @@ import testcamera
 import move 
 import random
 
-move.right(1.5 , 1)
+move.pos_right(1.5)
 
 # while True:
 #     try:

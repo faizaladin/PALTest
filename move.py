@@ -17,6 +17,13 @@ def forward(num, en_value):
     motor_b.forward()
     time.sleep(num)
 
+def pos_right(num):
+    ena.value = 0.87
+    enb.value = 0.87
+    motor_a.backward()
+    motor_b.backward()
+    time.sleep(num)
+
 def backward(num):
     ena.value = 0.25
     enb.value = 0.25
