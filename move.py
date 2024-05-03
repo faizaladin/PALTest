@@ -6,6 +6,9 @@ enb = PWMOutputDevice(13)
 motor_a = Motor(forward=17, backward=27)
 motor_b = Motor(forward=5, backward=22)
 
+def stop():
+    motor_a.stop()
+    motor_b.stop()
 
 def forward(num, en_value):
     ena.value = en_value
@@ -13,8 +16,6 @@ def forward(num, en_value):
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
-    motor_a.stop()
-    motor_b.stop()
 
 def backward(num):
     ena.value = 0.25
@@ -22,8 +23,6 @@ def backward(num):
     motor_a.backward()
     motor_b.backward()
     time.sleep(num)
-    motor_a.stop()
-    motor_b.stop()
 
 def right(num):
     ena.value = 0.87
@@ -31,8 +30,6 @@ def right(num):
     motor_a.forward()
     motor_b.backward()
     time.sleep(num)
-    motor_a.stop()
-    motor_b.stop()
 
 def left(num, en_value):
     ena.value = en_value
@@ -40,12 +37,11 @@ def left(num, en_value):
     motor_a.backward()
     motor_b.forward()
     time.sleep(num)
-    motor_a.stop()
-    motor_b.stop()
 
 def curve_left_while_forward():
     forward(1, 0.5)  # Move forward for 1 second at 50% speed
-    left(0.5, 0.5) 
-    forward(0.75, 0.5)   # 
+    left(0.5, 0.75) 
+    forward(1, 0.5)   # 
+    stop()
 
 curve_left_while_forward()
