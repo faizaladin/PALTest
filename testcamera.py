@@ -229,8 +229,8 @@ def find_center_of_blue():
             cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
-        #cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
-        #cv2.waitKey(0)  # Wait for any key press to close the window
+        cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
+        cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
     cap.release()
