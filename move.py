@@ -24,9 +24,9 @@ def backward(num):
     motor_b.backward()
     time.sleep(num)
 
-def right(num):
-    ena.value = 0.87
-    enb.value = 0.87
+def right(num, en_value):
+    ena.value = en_value
+    enb.value = en_value
     motor_a.forward()
     motor_b.backward()
     time.sleep(num)
