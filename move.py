@@ -25,8 +25,8 @@ def pos_right(num):
     time.sleep(num)
 
 def backward(num):
-    ena.value = 0.25
-    enb.value = 0.25
+    ena.value = 0.2
+    enb.value = 0.2
     motor_a.backward()
     motor_b.backward()
     time.sleep(num)

@@ -21,4 +21,4 @@ while robot_info[1] > 5 and robot_info[1] < 355:
     robot_info = testcamera.calculate_orientation()
 
 print("done")
-move.backward(4)
+move.backward(6)
