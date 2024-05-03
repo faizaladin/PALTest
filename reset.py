@@ -1,4 +1,6 @@
 import testcamera
 import move 
 
-print("hello world")
+robot_info = calculate_orientation()
+
+print(robot_info)
