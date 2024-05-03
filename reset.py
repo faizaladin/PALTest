@@ -1,3 +1,5 @@
+from gpiozero import Motor, PWMOutputDevice
+import time
 import testcamera
 import move 
 
@@ -12,5 +14,7 @@ while robot_info[1] > 2 and robot_info[1] < 358:
         move.stop()
     robot_info = testcamera.calculate_orientation()
     print(robot_info)
+
+GPIO.cleanup()
 
 print(robot_info)
