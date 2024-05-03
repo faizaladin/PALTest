@@ -32,8 +32,8 @@ def right(num):
     time.sleep(num)
 
 def left(num, ena_value, enb_value):
-    ena.value = en_value
-    enb.value = en_value
+    ena.value = ena_value
+    enb.value = enb_value
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
