@@ -203,7 +203,6 @@ def find_center_of_blue(robot_center):
         red_points = []  # Array to store red point coordinates
         for coord in blue_coordinates:
             if colony_region[0] <= coord[0] <= colony_region[2] and colony_region[1] <= coord[1] <= colony_region[3]:
-                cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
                 red_points.append(coord)  # Store red point coordinates
         # Apply blue filter
         lower_blue = np.array([90, 50, 50])  # Adjusted lower bound
@@ -217,7 +216,6 @@ def find_center_of_blue(robot_center):
         # Draw red points on the coordinates detected by the filter within the grid space
         for coord in blue_filter_coordinates:
             if colony_region[0] <= coord[1] <= colony_region[2] and colony_region[1] <= coord[0] <= colony_region[3]:
-                cv2.circle(rotated_img, (coord[1], coord[0]), 3, (0, 0, 255), -1)  # Red color
                 red_points.append((coord[1], coord[0]))  # Store red point coordinates
 
         # Calculate distances of each red point from the robot center and store them with their respective points
@@ -227,11 +225,13 @@ def find_center_of_blue(robot_center):
         sorted_distances_with_points = sorted(distances_with_points)
 
         # Take only the closest 100 points with their distances
-        closest_100_points_with_distances = sorted_distances_with_points[:15]
+        closest_100_points_with_distances = sorted_distances_with_points[:1800]
 
         # Extract only the points from the sorted list of closest points with distances
         red_points = [point for (_, point) in closest_100_points_with_distances]
 
+        for coord in red_points:
+            cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
         #print(red_points)
 
         # Calculate the average of red points

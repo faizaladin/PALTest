@@ -11,10 +11,10 @@ while robot_info[1] > 3 and robot_info[1] < 357:
     if robot_info[1] < 3 or robot_info[1] > 357:
         break
     elif robot_info[1] > 90:
-        move.right(random.uniform(0.1, 0.5), 0.87)
+        move.right(random.uniform(0.2, 0.5), 1)
         move.stop()
     else:
-        move.left(random.uniform(0.1, 0.5), 0.87)
+        move.left(random.uniform(0.2, 0.5), 1)
         move.stop()
     time.sleep(2)
     print("checking")
