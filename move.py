@@ -51,7 +51,7 @@ def left(num, en_value):
     motor_a.stop()
     motor_b.stop()
 
-forward_125()
+forward()
 # time.sleep(1)
 # left(1.2)
 # time.sleep(1)
