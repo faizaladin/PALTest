@@ -6,7 +6,7 @@ import random
 
 robot_info = testcamera.calculate_orientation()
 
-while robot_info[1] > 5 and robot_info[1] < 355:
+while robot_info[1] > 2 and robot_info[1] < 358:
     print(robot_info[1])
     if robot_info[1] < 2 or robot_info[1] > 358:
         break
