@@ -40,7 +40,7 @@ def left(num, en_value):
 
 def curve_left_while_forward():
     forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    left(1.1, 1) 
+    left(1.15, 1) 
     forward(1, 0.5)   # 
     stop()
 
