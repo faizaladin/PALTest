@@ -22,7 +22,7 @@ while robot_info[1] > 3 and robot_info[1] < 357:
 
 print("done")
 move.backward(6)
-move.forward(0.5, 0.5)
+move.forward(0.3, 0.25)
 move.right(1, 1)
 move.backward(6)
 move.stop()
