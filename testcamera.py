@@ -227,12 +227,12 @@ def find_center_of_blue(robot_center):
         sorted_distances_with_points = sorted(distances_with_points)
 
         # Take only the closest 100 points with their distances
-        closest_100_points_with_distances = sorted_distances_with_points[:20]
+        closest_100_points_with_distances = sorted_distances_with_points[:15]
 
         # Extract only the points from the sorted list of closest points with distances
         red_points = [point for (_, point) in closest_100_points_with_distances]
 
-        print(red_points)
+        #print(red_points)
 
         # Calculate the average of red points
         if red_points:
@@ -245,8 +245,8 @@ def find_center_of_blue(robot_center):
             cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
-        cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
-        cv2.waitKey(0)  # Wait for any key press to close the window
+        #cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
+        #cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
     cap.release()
