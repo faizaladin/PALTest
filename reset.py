@@ -21,5 +21,6 @@ while True:
 
     except KeyboardInterrupt:
         move.stop()
+        close_all()
 
 print(robot_info)
