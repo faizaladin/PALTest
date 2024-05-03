@@ -31,16 +31,16 @@ def right(num):
     motor_b.backward()
     time.sleep(num)
 
-def left(num, en_value):
+def left(num, ena_value, enb_value):
     ena.value = en_value
     enb.value = en_value
-    motor_a.backward()
+    motor_a.forward()
     motor_b.forward()
     time.sleep(num)
 
 def curve_left_while_forward():
     forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    left(1.2, 1) 
+    left(0.5, 1, 0.5) 
     forward(1, 0.5)   # 
     stop()
 
