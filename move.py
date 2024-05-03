@@ -16,7 +16,7 @@ def forward(num, en_value):
     motor_a.stop()
     motor_b.stop()
 
-def forward_12.5():
+def forward_125():
     forward(1, 0.125)
     left(1, 0.125)
     forward(1, 0.125)
@@ -51,7 +51,7 @@ def left(num, en_value):
     motor_a.stop()
     motor_b.stop()
 
-forward_12.5()
+forward_125()
 # time.sleep(1)
 # left(1.2)
 # time.sleep(1)
