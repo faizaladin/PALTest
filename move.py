@@ -40,7 +40,7 @@ def left(num, ena_value, enb_value):
 
 def curve_left_while_forward():
     #forward(0.5, 0.5)
-    left(2, 0.0, 1) 
+    left(2, 0.00001, 1) 
     stop()
 
 curve_left_while_forward()
