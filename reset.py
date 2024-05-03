@@ -2,6 +2,7 @@ from gpiozero import Motor, PWMOutputDevice
 import time
 import testcamera
 import move 
+import random
 
 while True:
     try:
