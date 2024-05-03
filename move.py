@@ -87,5 +87,4 @@ def curve_left_while_forward1000():
     stop()
 
 
-
-curve_left_while_forward250()
+curve_left_while_forward375()
