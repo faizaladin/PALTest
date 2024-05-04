@@ -241,9 +241,13 @@ def find_center_of_blue(robot_center):
             average_point = (int(average_x), int(average_y))
             point_on_grid = (int(average_x), int(average_y))
 
+            robot_top = (robot_center[0], 600)
+
             # Draw a yellow dot at the average point
             cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
             cv2.circle(rotated_img, robot_center, 5, (0, 255, 0), -1)
+            cv2.circle(rotated_img, robot_top, 5, (0, 255, 0), -1)
+
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
         #cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
@@ -255,31 +259,50 @@ def find_center_of_blue(robot_center):
 
     return point_on_grid
 
+def slope(x1, y1, x2, y2): # Line slope given two points:
+    return (y2-y1)/(x2-x1)
+
+def angle(s1, s2): 
+    return math.degrees(math.atan((s2-s1)/(1+(s2*s1))))
+
+def normalize_angle(angle, quadrant_checker):
+    if quadrant_checker[0] > 0 and quadrant_checker[1] > 0:
+        return angle
+    elif quadrant_checker[0] > 0 and quadrant_checker[1] < 0:
+        return 180 - abs(angle)
+    elif quadrant_checker[0] < 0 and quadrant_checker[1] < 0:
+        return 180 + abs(angle)
+    elif quadrant_checker[0] < 0 and quadrant_checker[1] > 0:
+        return 360 - abs(angle)
+
+    
+
+    # Normalize the angle to be between 0 and 360 degrees
+    normalized_angle = angle % 360
+    return normalized_angle
+
 def calculate_orientation():
+    # Assuming find_center_of_robot and find_center_of_blue functions are implemented
+       # Assuming find_center_of_robot and find_center_of_blue functions are implemented
     robot_center = find_center_of_robot()
     triangle_center = find_center_of_blue(robot_center)
-    # Coordinates of corners
-    top_left_corner = (1250, 600)
-    bottom_left_corner = (0, 0)
-    top_right = (2600, 600)
-    bottom_right = (1350, 0)
 
-    # Adjust coordinates
-    robot_center = (robot_center[0] - 1250, 1980 - robot_center[1])
-    triangle_center = (triangle_center[0] - 1250, 1980 - triangle_center[1])
+    adjusted_robot_center = (robot_center[0] - 1250, 1980 - robot_center[1])
+    adjusted_triangle_center = (triangle_center[0]-1250, 1980 - triangle_center[1])
 
-    # Calculate vectors
-    vec1 = (top_left_corner[0] - robot_center[0], top_left_corner[1] - robot_center[1])
-    vec2 = (triangle_center[0] - robot_center[0], triangle_center[1] - robot_center[1])
+    robot_center = adjusted_robot_center
+    triangle_center = adjusted_triangle_center
 
-    # Calculate angle between vectors
-    angle_rad = math.atan2(vec2[1], vec2[0]) - math.atan2(vec1[1], vec1[0])
-    angle_deg = math.degrees(angle_rad)
+    quadrant_checker = ((triangle_center[0]-robot_center[0]), (triangle_center[1] - robot_center[1]))
+    
+    robot_top = (robot_center[0], 1380)
 
-    # Convert angle to the range (0, 360) with top as 0, right as 90, bottom as 180, and left as 270
-    angle_deg = (90 - angle_deg) % 360
+    slope1 = slope(robot_center[0], robot_center[1], triangle_center[0], triangle_center[1])
+    slope2 = 10000000000
 
-    return [robot_center, angle_deg]
+    initial_angle = angle(slope1, slope2)
 
-info = calculate_orientation()
-print(info)
+    return [robot_center, normalize_angle(initial_angle, quadrant_checker)]
+
+
+# Example usage:
