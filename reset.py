@@ -24,6 +24,8 @@ try:
     move.backward(6)
     move.forward(0.3, 0.25)
     print("working on turn")
+    robot_info = testcamera.calculate_orientation()
+    print(robot_info)
     while robot_info[1] < 87 or  robot_info[1] > 92:
         print(robot_info[1])
         if robot_info[1] > 87 or robot_info[1] <= 90:
