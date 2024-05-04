@@ -3,7 +3,7 @@ import cv2
 import time
 import move
 
-buffer_size = 15
+buffer_size = 20
 
 # Initialize the camera
 cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
@@ -13,7 +13,7 @@ cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 # Define the frame rate and the interval (in seconds) between captures
 
 # Set the maximum number of images to capture
-max_images = 10
+max_images = 20
 image_count = 0
 
 # List to store captured images
@@ -32,5 +32,5 @@ try:
 
 finally:
     for i in range(len(captured_images)):
-        cv.imshow(captured_images[i])
+        cv2.imshow(captured_images[i])
     print(len(captured_images))
