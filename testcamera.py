@@ -326,7 +326,3 @@ def point_in_grid(point, grid_points):
         if point in points:
             return grid_num
     return None  # Return None if the point is not in any grid square
-
-info = calculate_orientation()
-#print(point_in_grid(info[0], grid_points))
-print(point_in_grid(info[0], grid_points))
