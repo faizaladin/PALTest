@@ -23,18 +23,13 @@ captured_images = []
 
 move.grid_forward(0.2)
 
-fps = cap.get(cv2.CAP_PROP_FPS)
-
-currentFrame = 0
-
 try:
     while image_count < max_images:
         # Capture frame-by-frame
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
-        currentFrame += fps * 5
-        cap.set(cv2.CAP_PROP_POS_FRAMES, currentFrame)
+        time.sleep(1.2)
     move.stop()
 
 finally:
