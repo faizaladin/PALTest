@@ -16,6 +16,8 @@ cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 max_images = 30
 image_count = 0
 
+grids_hit = []
+
 # List to store captured images
 captured_images = []
 
@@ -33,7 +35,8 @@ try:
 finally:
     for i in range(len(captured_images)):
         # Display the image
-        cv2.imshow(f'Image {i+1}', captured_images[i])
-
+        info = testcamera.calculate_orientation()
+        grids_hit.append(info[0], info[2])
         # Delay for a short time (adjust as needed)
         cv2.waitKey(1000)  # 1 second delay
+    print(grids_hit)

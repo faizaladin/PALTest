@@ -319,7 +319,7 @@ def calculate_orientation():
 
     initial_angle = angle(slope1, slope2)
 
-    return [robot_center, normalize_angle(initial_angle, quadrant_checker)]
+    return [robot_center, normalize_angle(initial_angle, quadrant_checker), grid_points]
 
 def point_in_grid(point, grid_points):
     for grid_num, points in grid_points.items():
