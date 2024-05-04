@@ -21,8 +21,6 @@ grids_hit = []
 # List to store captured images
 captured_images = []
 
-# Get the current time
-start_time = time.time()
 move.grid_forward(0.2)
 
 try:
@@ -38,6 +36,7 @@ finally:
     for i in range(len(captured_images)):
         # Display the image
         info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
+        print(info)
         grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         print(f"image {i} processed")
