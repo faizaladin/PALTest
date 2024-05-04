@@ -303,5 +303,6 @@ def calculate_orientation():
     slope2 = 10000000000
 
     initial_angle = angle(slope1, slope2)
- 
+
     return [robot_center, normalize_angle(initial_angle, quadrant_checker)]
+

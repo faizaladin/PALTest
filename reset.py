@@ -31,7 +31,7 @@ try:
         if robot_info[1] >= 87:
             break
         elif robot_info[1] < 87:
-            move.left(random.uniform(0.15, 0.4), 0.85)
+            move.right(random.uniform(0.15, 0.4), 0.85)
             move.stop()
         time.sleep(2)
         print("checking")
