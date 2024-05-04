@@ -110,8 +110,12 @@ def find_center_of_robot():
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
 
+    buffer_size = 10
+
     # Capture video from the IP camera
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
+
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
     # Read a single frame
     ret, img = cap.read()
@@ -178,9 +182,13 @@ def find_center_of_blue(robot_center):
 
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
+    
+    buffer_size = 10
 
     # Capture video from the IP camera
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
+
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
     # Read a single frame
     ret, img = cap.read()
