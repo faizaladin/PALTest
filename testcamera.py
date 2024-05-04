@@ -84,33 +84,42 @@ def detect_lime_green(image, region, rows, cols):
 
     return lime_green_coordinates
 
+grid_points = {}
 # Function to draw a grid of squares within a specified region of an image
-def draw_grid_within_region(image, region, rows, cols, color=(255, 255, 255), thickness=2):
+def draw_grid_within_region(image, region, rows, cols, radius=110):
     x1, y1, x2, y2 = region  # Region coordinates (top-left and bottom-right)
     region_height, region_width = y2 - y1, x2 - x1
     
     row_step = region_height // rows
     col_step = region_width // cols
 
-    for i in range(rows + 1):  # Adjusted to draw grid lines on the boundary
-        y = y1 + i * row_step
-        cv2.line(image, (x1, y), (x2, y), color, thickness)
-    for j in range(cols + 1):  # Adjusted to draw grid lines on the boundary
-        x = x1 + j * col_step
-        cv2.line(image, (x, y1), (x, y2), color, thickness)
+    global grid_points  # Dictionary to store points within each grid square
 
-    # Print the coordinates of the four corners of the grid
-    # print("Top-left corner:", (x1, y1))
-    # print("Top-right corner:", (x2, y1))
-    # print("Bottom-left corner:", (x1, y2))
-    # print("Bottom-right corner:", (x2, y2))
+    for i in range(rows):
+        for j in range(cols):
+            center_x = x1 + (j + 0.5) * col_step
+            center_y = y1 + (i + 0.5) * row_step
+            grid_number = i * cols + j + 1  # Calculate grid square number
+            grid_points[grid_number] = set()  # Initialize empty set for points in this grid square
+            # Find points around each center point
+            for y in range(int(center_y - radius), int(center_y + radius + 1)):
+                for x in range(int(center_x - radius), int(center_x + radius + 1)):
+                    distance = np.linalg.norm(np.array((center_x, center_y)) - np.array((x, y)))
+                    if distance <= radius:
+                        # Normalize x-coordinate by subtracting 1250 and y-coordinate by subtracting from 1980
+                        normalized_x = x - 1250
+                        normalized_y = 1980 - y
+                        grid_points[grid_number].add((normalized_x, normalized_y))
+
+# Now grid_points is a dictionary where keys are grid coordinates and values are lists of points within each grid square
+
 
 def find_center_of_robot():
 
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
 
-    buffer_size = 10
+    buffer_size = 15
 
     # Capture video from the IP camera
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
@@ -153,7 +162,7 @@ def find_center_of_robot():
         # Draw red points on the coordinates detected by the filter within the grid space
         for coord in lime_green_filter_coordinates:
             if colony_region[0] <= coord[1] <= colony_region[2] and colony_region[1] <= coord[0] <= colony_region[3]:
-                cv2.circle(rotated_img, (coord[1], coord[0]), 3, (0, 0, 255), -1)  # Red color
+                #cv2.circle(rotated_img, (coord[1], coord[0]), 3, (0, 0, 255), -1)  # Red color
                 red_points.append((coord[1], coord[0]))  # Store red point coordinates
 
         # Calculate the average of red points
@@ -183,7 +192,7 @@ def find_center_of_blue(robot_center):
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
     
-    buffer_size = 10
+    buffer_size = 15
 
     # Capture video from the IP camera
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
@@ -238,8 +247,8 @@ def find_center_of_blue(robot_center):
         # Extract only the points from the sorted list of closest points with distances
         red_points = [point for (_, point) in closest_100_points_with_distances]
 
-        for coord in red_points:
-            cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
+        # for coord in red_points:
+        #     cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
         #print(red_points)
 
         # Calculate the average of red points
@@ -258,8 +267,8 @@ def find_center_of_blue(robot_center):
 
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
-        #cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
-        #cv2.waitKey(0)  # Wait for any key press to close the window
+        cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
+        cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
     cap.release()
@@ -284,8 +293,6 @@ def normalize_angle(angle, quadrant_checker):
         return 180 + abs(angle)
     elif quadrant_checker[0] < 0 and quadrant_checker[1] > 0:
         return 360 - abs(angle)
-
-    
 
     # Normalize the angle to be between 0 and 360 degrees
     normalized_angle = angle % 360
@@ -314,3 +321,12 @@ def calculate_orientation():
 
     return [robot_center, normalize_angle(initial_angle, quadrant_checker)]
 
+def point_in_grid(point, grid_points):
+    for grid_num, points in grid_points.items():
+        if point in points:
+            return grid_num
+    return None  # Return None if the point is not in any grid square
+
+info = calculate_orientation()
+#print(point_in_grid(info[0], grid_points))
+print(point_in_grid(info[0], grid_points))
