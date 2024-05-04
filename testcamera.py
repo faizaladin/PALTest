@@ -174,8 +174,8 @@ def find_center_of_robot(ret, img):
         #cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
-    cap.release()
-    cv2.destroyAllWindows()
+    # cap.release()
+    # cv2.destroyAllWindows()
 
     return point_on_grid
 
@@ -261,8 +261,8 @@ def find_center_of_blue(robot_center, ret, img):
         #cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
-    cap.release()
-    cv2.destroyAllWindows()
+    # cap.release()
+    # cv2.destroyAllWindows()
 
     return point_on_grid
 
