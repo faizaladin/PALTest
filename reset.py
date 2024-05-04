@@ -24,7 +24,7 @@ try:
     print("done")
     move.backward(6)
     move.forward(0.3, 0.25)
-    move.right(1.1, 1)
+    move.right(1.1, 0.87)
     move.backward(6)
     move.stop()
 
