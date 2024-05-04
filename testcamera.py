@@ -186,11 +186,11 @@ def find_center_of_blue(robot_center, ret, img):
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
     
-    buffer_size = 15
+    # buffer_size = 15
 
     # Capture video from the IP camera
     # Read a single frame
-    ret, img = cap.read()
+    # ret, img = cap.read()
 
     # If the frame is successfully read
     if ret:
