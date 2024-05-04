@@ -23,7 +23,7 @@ captured_images = []
 
 # Get the current time
 start_time = time.time()
-grid_forward(0.2)
+move.grid_forward(0.2)
 
 try:
     while image_count < max_images:
