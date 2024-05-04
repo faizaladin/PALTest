@@ -3,12 +3,14 @@ import cv2
 import time
 import move
 
+buffer_size = 15
+
 # Initialize the camera
 cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
 
+cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
+
 # Define the frame rate and the interval (in seconds) between captures
-frame_rate = 30  # Adjust this based on your camera capabilities
-capture_interval = 1  # 1 second
 
 # Set the maximum number of images to capture
 max_images = 10
