@@ -205,8 +205,8 @@ def find_center_of_blue(robot_center):
             if colony_region[0] <= coord[0] <= colony_region[2] and colony_region[1] <= coord[1] <= colony_region[3]:
                 red_points.append(coord)  # Store red point coordinates
         # Apply blue filter
-        lower_blue = np.array([90, 50, 50])  # Adjusted lower bound
-        upper_blue = np.array([130, 255, 255])  # Adjusted upper bound
+        lower_blue = np.array([100, 50, 50])  # Adjust this range for the specific color
+        upper_blue = np.array([140, 255, 255]) # Adjusted upper bound
         mask_blue = cv2.inRange(cv2.cvtColor(rotated_img, cv2.COLOR_BGR2HSV), lower_blue, upper_blue)
         blue_filtered = cv2.bitwise_and(rotated_img, rotated_img, mask=mask_blue)
 
@@ -225,7 +225,7 @@ def find_center_of_blue(robot_center):
         sorted_distances_with_points = sorted(distances_with_points)
 
         # Take only the closest 100 points with their distances
-        closest_100_points_with_distances = sorted_distances_with_points[:1800]
+        closest_100_points_with_distances = sorted_distances_with_points[:1100]
 
         # Extract only the points from the sorted list of closest points with distances
         red_points = [point for (_, point) in closest_100_points_with_distances]
@@ -243,6 +243,7 @@ def find_center_of_blue(robot_center):
 
             # Draw a yellow dot at the average point
             cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
+            cv2.circle(rotated_img, robot_center, 5, (0, 255, 0), -1)
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
         #cv2.imshow('Rotated Original with Grid, Detected Blue, Red Points, Blue Filter, and Yellow Dot', rotated_img)
