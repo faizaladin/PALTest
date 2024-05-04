@@ -23,6 +23,7 @@ try:
 
     move.backward(6)
     move.forward(0.3, 0.25)
+    move.stop()
     print("working on turn")
     robot_info = testcamera.calculate_orientation()
     while robot_info[1] < 87:
