@@ -4,8 +4,16 @@ import testcamera
 import move 
 import random
 
+buffer_size = 20
+
+# Initialize the camera
+cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+
+cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
+
 try:
-    robot_info = testcamera.calculate_orientation()
+    ret, frame = cap.read()
+    robot_info = testcamera.calculate_orientation(ret, frame)
 
     while robot_info[1] > 5 and robot_info[1] < 355:
         print(robot_info[1])

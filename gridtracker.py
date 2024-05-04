@@ -29,7 +29,7 @@ try:
     while image_count < max_images:
         # Capture frame-by-frame
         ret, frame = cap.read()
-        captured_images.append(frame)
+        captured_images.append(ret, frame)
         image_count += 1
         time.sleep(1.2)
     move.stop()
@@ -37,7 +37,7 @@ try:
 finally:
     for i in range(len(captured_images)):
         # Display the image
-        info = testcamera.calculate_orientation()
+        info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
         grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         print(f"image {i} processed")

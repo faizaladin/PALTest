@@ -114,20 +114,14 @@ def draw_grid_within_region(image, region, rows, cols, radius=110):
 # Now grid_points is a dictionary where keys are grid coordinates and values are lists of points within each grid square
 
 
-def find_center_of_robot():
+def find_center_of_robot(ret, img):
 
     # Define the region of the colony space (coordinates: top-left (x1, y1) and bottom-right (x2, y2))
     colony_region = (1250, 600, 2600, 1980)  # Example region coordinates
 
-    buffer_size = 15
-
     # Capture video from the IP camera
-    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
-
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
     # Read a single frame
-    ret, img = cap.read()
 
     # If the frame is successfully read
     if ret:
@@ -185,7 +179,7 @@ def find_center_of_robot():
 
     return point_on_grid
 
-def find_center_of_blue(robot_center):
+def find_center_of_blue(robot_center, ret, img):
 
     points_to_keep = []
 
@@ -195,10 +189,6 @@ def find_center_of_blue(robot_center):
     buffer_size = 15
 
     # Capture video from the IP camera
-    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
-
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
-
     # Read a single frame
     ret, img = cap.read()
 
@@ -298,11 +288,11 @@ def normalize_angle(angle, quadrant_checker):
     normalized_angle = angle % 360
     return normalized_angle
 
-def calculate_orientation():
+def calculate_orientation(ret, img):
     # Assuming find_center_of_robot and find_center_of_blue functions are implemented
        # Assuming find_center_of_robot and find_center_of_blue functions are implemented
-    robot_center = find_center_of_robot()
-    triangle_center = find_center_of_blue(robot_center)
+    robot_center = find_center_of_robot(ret, img)
+    triangle_center = find_center_of_blue(robot_center, ret, img)
 
     adjusted_robot_center = (robot_center[0] - 1250, 1980 - robot_center[1])
     adjusted_triangle_center = (triangle_center[0]-1250, 1980 - triangle_center[1])
