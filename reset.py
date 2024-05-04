@@ -26,10 +26,11 @@ try:
     move.stop()
     print("working on turn")
     robot_info = testcamera.calculate_orientation()
-    while robot_info[1] < 87:
+    while robot_info[1] < 87 or robot_info[1] > 91:
         print(robot_info[1])
-        if robot_info[1] >= 87:
-            break
+        if robot_info[1] > 91:
+            move.left(random.uniform(0.15, 0.4), 0.85)
+            move.stop()
         elif robot_info[1] < 87:
             move.right(random.uniform(0.15, 0.4), 0.85)
             move.stop()
