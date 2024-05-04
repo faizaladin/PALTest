@@ -24,10 +24,10 @@ try:
     print("done")
     move.backward(6)
     move.forward(0.3, 0.25)
-    
+
     while robot_info[1] < 87 and robot_info[1] > 92:
         print(robot_info[1])
-        if robot_info[1] > 87 or robot_info[1] < = 90:
+        if robot_info[1] > 87 or robot_info[1] <= 90:
             break
         elif robot_info[1] < 87:
             move.left(random.uniform(0.15, 0.4), 0.85)
