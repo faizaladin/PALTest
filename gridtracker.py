@@ -13,7 +13,7 @@ cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 # Define the frame rate and the interval (in seconds) between captures
 
 # Set the maximum number of images to capture
-max_images = 30
+max_images = 5
 image_count = 0
 
 grids_hit = []
@@ -23,19 +23,20 @@ captured_images = []
 
 # Get the current time
 start_time = time.time()
-move.forward(1, 0.25)
+move.forward(1, 0.1)
 try:
     while image_count < max_images:
         # Capture frame-by-frame
         ret, frame = cap.read()
         captured_images.append(frame)
         image_count += 1
+        time.sleep(1)
     move.stop()
 
 finally:
     for i in range(len(captured_images)):
         # Display the image
-        info = testcamera.calculate_orientation()
+        robot_center = testcamera.calculate_orientation()
         grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         cv2.waitKey(1000)  # 1 second delay
