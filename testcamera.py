@@ -260,6 +260,8 @@ def find_center_of_blue(robot_center):
     return point_on_grid
 
 def slope(x1, y1, x2, y2): # Line slope given two points:
+    if (x2-x1) == 0:
+        return 10000000000
     return (y2-y1)/(x2-x1)
 
 def angle(s1, s2): 
