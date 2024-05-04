@@ -306,5 +306,4 @@ def calculate_orientation():
 
     return [robot_center, normalize_angle(initial_angle, quadrant_checker)]
 
-
 # Example usage:
