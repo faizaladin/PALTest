@@ -39,4 +39,5 @@ finally:
         grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         cv2.waitKey(1000)  # 1 second delay
+        print(f"image {i} processed")
     print(grids_hit)
