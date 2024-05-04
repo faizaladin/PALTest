@@ -13,7 +13,7 @@ cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 # Define the frame rate and the interval (in seconds) between captures
 
 # Set the maximum number of images to capture
-max_images = 20
+max_images = 30
 image_count = 0
 
 # List to store captured images
@@ -31,6 +31,4 @@ try:
     move.stop()
 
 finally:
-    for i in range(len(captured_images)):
-        cv2.imshow(captured_images[i])
     print(len(captured_images))
