@@ -31,7 +31,7 @@ try:
         ret, frame = cap.read()
         captured_images.append(frame)
         image_count += 1
-        time.sleep(0.75)
+        time.sleep(1.2)
     move.stop()
 
 finally:
