@@ -28,4 +28,6 @@ try:
     move.stop()
 
 finally:
+    for i in range(len(captured_images)):
+        cv.imshow(captured_images[i])
     print(len(captured_images))
