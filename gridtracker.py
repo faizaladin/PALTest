@@ -23,7 +23,7 @@ captured_images = []
 
 # Get the current time
 start_time = time.time()
-move.forward(1, 0.1)
+move.forward(1, 0.25)
 try:
     while image_count < max_images:
         # Capture frame-by-frame
