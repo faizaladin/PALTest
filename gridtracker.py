@@ -29,7 +29,7 @@ try:
     while image_count < max_images:
         # Capture frame-by-frame
         ret, frame = cap.read()
-        captured_images.append(ret, frame)
+        captured_images.append([ret, frame])
         image_count += 1
         time.sleep(1.2)
     move.stop()
