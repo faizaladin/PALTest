@@ -36,7 +36,7 @@ finally:
     for i in range(len(captured_images)):
         # Display the image
         info = testcamera.calculate_orientation()
-        grids_hit.append(info[0], info[2])
+        grids_hit.append(point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         cv2.waitKey(1000)  # 1 second delay
     print(grids_hit)
