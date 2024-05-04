@@ -30,13 +30,13 @@ try:
         ret, frame = cap.read()
         captured_images.append(frame)
         image_count += 1
-        time.sleep(1)
+        time.sleep(0.5)
     move.stop()
 
 finally:
     for i in range(len(captured_images)):
         # Display the image
-        robot_center = testcamera.calculate_orientation()
+        info = testcamera.calculate_orientation()
         grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
         # Delay for a short time (adjust as needed)
         cv2.waitKey(1000)  # 1 second delay
