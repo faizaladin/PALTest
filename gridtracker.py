@@ -31,4 +31,9 @@ try:
     move.stop()
 
 finally:
-    print(len(captured_images))
+    for i in range(len(captured_images)):
+        # Display the image
+        cv2.imshow(f'Image {i+1}', captured_images[i])
+
+        # Delay for a short time (adjust as needed)
+        cv2.waitKey(1000)  # 1 second delay
