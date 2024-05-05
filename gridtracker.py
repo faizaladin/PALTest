@@ -15,7 +15,7 @@ grids_hit = []
 captured_images = []
 
 try:
-    move.grid_forward(0.1)
+    move.grid_forward(0.15)
     while image_count < max_images:
         buffer_size = 20
         # Initialize the camera
