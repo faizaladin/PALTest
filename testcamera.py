@@ -141,7 +141,7 @@ def find_center_of_robot(ret, img):
         red_points = []  # Array to store red point coordinates
         for coord in lime_green_coordinates:
             if colony_region[0] <= coord[0] <= colony_region[2] and colony_region[1] <= coord[1] <= colony_region[3]:
-                cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
+                #cv2.circle(rotated_img, coord, 3, (0, 0, 255), -1)  # Red color
                 red_points.append(coord)  # Store red point coordinates
 
         # Apply lime green filter
@@ -163,11 +163,11 @@ def find_center_of_robot(ret, img):
         if red_points:
             average_x = sum(pt[0] for pt in red_points) / len(red_points)
             average_y = sum(pt[1] for pt in red_points) / len(red_points)
-            average_point = (int(average_x), int(average_y))
+            #average_point = (int(average_x), int(average_y))
             point_on_grid = (int(average_x), int(average_y))
 
             # Draw a blue dot at the average point
-            cv2.circle(rotated_img, average_point, 5, (255, 0, 0), -1)  # Blue color
+            #cv2.circle(rotated_img, average_point, 5, (255, 0, 0), -1)  # Blue color
 
         # Display the image with grid lines, detected lime green, red points, lime green filter, and blue dot
         #cv2.imshow('Rotated Original with Grid, Detected Lime Green, Red Points, Lime Green Filter, and Blue Dot', rotated_img)
@@ -199,7 +199,7 @@ def find_center_of_blue(robot_center, ret, img):
         rotated_img = cv2.warpAffine(img, rotation_matrix, (img.shape[1], img.shape[0]))
 
         # Draw grid lines within the colony space region and print corner coordinates
-        draw_grid_within_region(rotated_img, colony_region, 5, 5)  # Adjust the number of rows and columns as needed
+        #draw_grid_within_region(rotated_img, colony_region, 5, 5)  # Adjust the number of rows and columns as needed
 
         # Detect blue within the grid space
         blue_coordinates = detect_blue(rotated_img, colony_region, 5, 5)
@@ -246,12 +246,12 @@ def find_center_of_blue(robot_center, ret, img):
             average_point = (int(average_x), int(average_y))
             point_on_grid = (int(average_x), int(average_y))
 
-            robot_top = (robot_center[0], 600)
+            #robot_top = (robot_center[0], 600)
 
             # Draw a yellow dot at the average point
-            cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
-            cv2.circle(rotated_img, robot_center, 5, (0, 255, 0), -1)
-            cv2.circle(rotated_img, robot_top, 5, (0, 255, 0), -1)
+            #cv2.circle(rotated_img, average_point, 5, (0, 255, 255), -1)  # Yellow color
+            #cv2.circle(rotated_img, robot_center, 5, (0, 255, 0), -1)
+            #cv2.circle(rotated_img, robot_top, 5, (0, 255, 0), -1)
 
 
         # Display the image with grid lines, detected blue, red points, blue filter, and yellow dot
@@ -288,7 +288,7 @@ def normalize_angle(angle, quadrant_checker):
 
 def calculate_orientation(ret, img):
     # Assuming find_center_of_robot and find_center_of_blue functions are implemented
-       # Assuming find_center_of_robot and find_center_of_blue functions are implemented
+    # Assuming find_center_of_robot and find_center_of_blue functions are implemented
     robot_center = find_center_of_robot(ret, img)
     triangle_center = find_center_of_blue(robot_center, ret, img)
 
