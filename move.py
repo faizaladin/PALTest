@@ -15,7 +15,7 @@ def grid_forward(en_value):
     enb.value = en_value
     motor_a.forward()
     motor_b.forward()
- 
+    
 def forward(num, en_value):
     ena.value = en_value
     enb.value = en_value
