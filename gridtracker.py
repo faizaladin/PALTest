@@ -6,7 +6,7 @@ import move
 # Define the frame rate and the interval (in seconds) between captures
 
 # Set the maximum number of images to capture
-max_images = 20
+max_images = 100
 image_count = 0
 
 grids_hit = []
