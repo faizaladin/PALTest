@@ -16,6 +16,7 @@ try:
     robot_info = testcamera.calculate_orientation(ret, frame)
 
     while robot_info[1] > 5 and robot_info[1] < 355:
+        robot_info = testcamera.calculate_orientation(ret, frame)
         print(robot_info[1])
         if robot_info[1] < 5 or robot_info[1] > 355:
             break
@@ -27,6 +28,8 @@ try:
             move.stop()
         time.sleep(2)
         print("checking")
+        cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
         ret, frame = cap.read()
         robot_info = testcamera.calculate_orientation(ret, frame)
 
@@ -34,6 +37,8 @@ try:
     move.forward(0.3, 0.25)
     move.stop()
     print("working on turn")
+    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
     ret, frame = cap.read()
     robot_info = testcamera.calculate_orientation(ret, frame)
     while robot_info[1] < 90 or robot_info[1] > 91.5:
@@ -46,6 +51,8 @@ try:
             move.stop()
         time.sleep(2)
         print("checking")
+        cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
         ret, frame = cap.read()
         robot_info = testcamera.calculate_orientation(ret, frame)
     move.backward(6)
