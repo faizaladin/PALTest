@@ -25,7 +25,7 @@ try:
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
-        time.sleep(1.2)
+        cv2.waitKey(100)
 
     move.stop()
 
