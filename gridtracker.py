@@ -20,7 +20,7 @@ try:
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
    
     #move.grid_forward(0.2)
-    move.curve_left_while_forward125()
+    move.curve_left_while_forward1000()
    
     while image_count < max_images:
         ret, frame = cap.read()
