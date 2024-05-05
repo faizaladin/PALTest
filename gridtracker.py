@@ -6,7 +6,7 @@ import move
 # Define the frame rate and the interval (in seconds) between captures
 
 # Set the maximum number of images to capture
-max_images = 100
+max_images = 106
 image_count = 0
 
 grids_hit = []
@@ -25,14 +25,14 @@ try:
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
-        cv2.waitKey(1000)
+        #cv2.waitKey(1000)
         #time.sleep(1.2)
 
     move.stop()
 
 finally:
     for i in range(len(captured_images)):
-        if i == 20 or i == 40 or i == 60 or i == 80 or i == 100:
+        if i % 15 == 0:
             # Display the image
             info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
             print(info[0])
