@@ -32,10 +32,11 @@ try:
 
 finally:
     for i in range(len(captured_images)):
-        # Display the image
-        info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
-        print(info[0])
-        grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
-        # Delay for a short time (adjust as needed)
-        print(f"image {i} processed")
+        if i == 20 or i == 40 or i == 60 or i == 80 or i == 100:
+            # Display the image
+            info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
+            print(info[0])
+            grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
+            # Delay for a short time (adjust as needed)
+            print(f"image {i} processed")
     print(grids_hit)
