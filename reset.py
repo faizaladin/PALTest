@@ -3,6 +3,7 @@ import time
 import testcamera
 import move 
 import random
+import cv2
 
 buffer_size = 20
 
