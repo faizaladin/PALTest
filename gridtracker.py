@@ -15,17 +15,18 @@ grids_hit = []
 captured_images = []
 
 try:
-    move.grid_forward(0.15)
+    buffer_size = 20
+    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
+   
+    move.grid_forward(0.2)
+   
     while image_count < max_images:
-        buffer_size = 20
-        # Initialize the camera
-        cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
-        cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
-        # Capture frame-by-frame
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
-        #cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+        time.sleep(1.2)
+
     move.stop()
 
 finally:
