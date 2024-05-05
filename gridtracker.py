@@ -3,41 +3,41 @@ import cv2
 import time
 import move
 
-# Define the frame rate and the interval (in seconds) between captures
+def gridtracking():
+    # Define the frame rate and the interval (in seconds) between captures
+    # Set the maximum number of images to capture
+    max_images = 106
+    image_count = 0
 
-# Set the maximum number of images to capture
-max_images = 106
-image_count = 0
+    grids_hit = []
 
-grids_hit = []
+    # List to store captured images
+    captured_images = []
 
-# List to store captured images
-captured_images = []
+    try:
+        buffer_size = 20
+        cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+        cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
+    
+        #move.grid_forward(0.2)
+        move.curve_left_while_forward1000()
+    
+        while image_count < max_images:
+            ret, frame = cap.read()
+            captured_images.append([ret, frame])
+            image_count += 1
+            #cv2.waitKey(1000)
+            #time.sleep(1.2)
 
-try:
-    buffer_size = 20
-    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
-   
-    #move.grid_forward(0.2)
-    move.curve_left_while_forward1000()
-   
-    while image_count < max_images:
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-        image_count += 1
-        #cv2.waitKey(1000)
-        #time.sleep(1.2)
+        move.stop()
 
-    move.stop()
-
-finally:
-    for i in range(len(captured_images)):
-        if i % 15 == 0:
-            # Display the image
-            info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
-            print(info[0])
-            grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
-            # Delay for a short time (adjust as needed)
-            print(f"image {i} processed")
-    print(grids_hit)
+    finally:
+        for i in range(len(captured_images)):
+            if i % 15 == 0:
+                # Display the image
+                info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
+                print(info[0])
+                grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
+                # Delay for a short time (adjust as needed)
+                print(f"image {i} processed")
+        return grids_hit
