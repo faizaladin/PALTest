@@ -19,7 +19,8 @@ try:
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
    
-    move.grid_forward(0.2)
+    #move.grid_forward(0.2)
+    move.curve_left_while_forward125()
    
     while image_count < max_images:
         ret, frame = cap.read()
