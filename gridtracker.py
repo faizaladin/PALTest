@@ -3,6 +3,7 @@ import cv2
 import time
 import move
 
+#NEED TO BE ABLE TO PASS MOVEMENT INSIDE GRID TRACKING
 def gridtracking():
     # Define the frame rate and the interval (in seconds) between captures
     # Set the maximum number of images to capture
