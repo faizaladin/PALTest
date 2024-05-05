@@ -42,12 +42,12 @@ try:
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
     ret, frame = cap.read()
     robot_info = testcamera.calculate_orientation(ret, frame)
-    while robot_info[1] < 95 or robot_info[1] > 100:
+    while robot_info[1] < 91 or robot_info[1] > 94:
         print(robot_info[1])
-        if robot_info[1] > 91.5:
+        if robot_info[1] > 94:
             move.left(random.uniform(0.15, 0.4), 0.85)
             move.stop()
-        elif robot_info[1] < 90:
+        elif robot_info[1] < 91:
             move.right(random.uniform(0.15, 0.4), 0.85)
             move.stop()
         time.sleep(2)
