@@ -104,4 +104,4 @@ def genetic_algorithm():
 # print("Best Individual:", best_individual)
 # print("Fitness Score:", fitness_function(best_individual))
 
-fitness_function(10001100000010010)
+fitness_function('10001100000010010')
