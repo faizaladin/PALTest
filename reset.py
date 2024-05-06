@@ -63,3 +63,5 @@ def reset():
 
     except KeyboardInterrupt:
         move.stop()
+
+reset()
