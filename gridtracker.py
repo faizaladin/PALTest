@@ -83,10 +83,16 @@ def gridtracking(direction_of_movement1, amount_of_curve1, direction_of_turn1, a
 
             move.stop()
 
-            direction_of_movement = direction_of_movement2
-            amount_of_curve = amount_of_curve2
-            direction_of_turn = direction_of_turn2
-            amount_of_turn = amount_of_turn2
+            if i % 2 == 0:
+                direction_of_movement = direction_of_movement1
+                amount_of_curve = amount_of_curve1
+                direction_of_turn = direction_of_turn1
+                amount_of_turn = amount_of_turn1
+            else:
+                direction_of_movement = direction_of_movement2
+                amount_of_curve = amount_of_curve2
+                direction_of_turn = direction_of_turn2
+                amount_of_turn = amount_of_turn2
             i += 1
 
     finally:
@@ -99,3 +105,4 @@ def gridtracking(direction_of_movement1, amount_of_curve1, direction_of_turn1, a
                 # Delay for a short time (adjust as needed)
                 print(f"image {i} processed")
         return grids_hit
+

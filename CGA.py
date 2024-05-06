@@ -42,7 +42,7 @@ def fitness_function(individual):
     
     # Perform whatever operation or simulation using the decoded parameters
     grids_hit = gridtracker.gridtracking(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
-
+    print(grids_hit)
     return len(grids_hit)
 
 # Generate a random individual
@@ -100,6 +100,8 @@ def genetic_algorithm():
     # Return the best individual found
     return max(population, key=fitness_function)
 
-best_individual = genetic_algorithm()
-print("Best Individual:", best_individual)
-print("Fitness Score:", fitness_function(best_individual))
+# best_individual = genetic_algorithm()
+# print("Best Individual:", best_individual)
+# print("Fitness Score:", fitness_function(best_individual))
+
+fitness_function(10001100000010010)
