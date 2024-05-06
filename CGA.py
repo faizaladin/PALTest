@@ -1,15 +1,26 @@
+#Phase1
 #bit 0 direction of movement 0 - right 1 - left
 #bit 1-3 amount of curve for bit 0 movement 8 different turns
 #bit 4 direction of turn 0 - right 1 - left
 #bit 5-6 amount of turn for bit 4 
-#bit 7-9 number of times to loop through can loop 8 times 
+
+#Phase2
+#bit 7 direction of movement 0 - right 1 - left
+#bit 8-10 amount of curve for bit 7 movement 8 different turns
+#bit 11 direction of turn 0 - right 1 - left
+#bit 12-13 amount of turn for bit 11
+
+#Loop
+#bit 14-16 number of times to loop through can loop 8 times 
+
+#17 bits total 
 
 import gridtracker
 import reset
 import random
 
 # Define the gene sequence
-GENE_LENGTH = 10
+GENE_LENGTH = 17
 
 # Define the parameters for the genetic algorithm
 POPULATION_SIZE = 100
@@ -18,13 +29,19 @@ NUM_GENERATIONS = 50
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
-    direction_of_movement = individual[0]  # Bit 0: 0 - right, 1 - left
-    amount_of_curve = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
-    direction_of_turn = individual[4]  # Bit 4: 0 - right, 1 - left
-    amount_of_turn = int("".join(map(str, individual[5:7])), 2)  # Bits 5-6: Amount of turn
-    number_of_loops = int("".join(map(str, individual[7:10])), 2)  # Bits 7-9: Number of times to loop through
-
-    grids_hit = gridtracker.gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amount_of_turn, number_of_loops)
+    # Decode the individual
+    direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
+    amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
+    direction_of_turn_1 = individual[4]  # Bit 4: 0 - right, 1 - left
+    amount_of_turn_1 = int("".join(map(str, individual[5:7])), 2)  # Bits 5-6: Amount of turn
+    direction_of_movement_2 = individual[7]  # Bit 7: 0 - right, 1 - left
+    amount_of_curve_2 = int("".join(map(str, individual[8:11])), 2)  # Bits 8-10: Amount of curve for movement
+    direction_of_turn_2 = individual[11]  # Bit 11: 0 - right, 1 - left
+    amount_of_turn_2 = int("".join(map(str, individual[12:14])), 2)  # Bits 12-13: Amount of turn
+    number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
+    
+    # Perform whatever operation or simulation using the decoded parameters
+    grids_hit = gridtracker.gridtracking(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
 
     return len(grids_hit)
 

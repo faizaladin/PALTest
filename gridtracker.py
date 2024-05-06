@@ -4,7 +4,7 @@ import time
 import move
 
 #NEED TO BE ABLE TO PASS MOVEMENT INSIDE GRID TRACKING
-def gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amount_of_turn, number_of_loops):
+def gridtracking(direction_of_movement1, amount_of_curve1, direction_of_turn1, amount_of_turn1, direction_of_movement2, amount_of_curve2, direction_of_turn2, amount_of_turn2, number_of_loops):
     # Define the frame rate and the interval (in seconds) between captures
     # Set the maximum number of images to capture
     max_images = 106
@@ -18,9 +18,13 @@ def gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amou
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
     i = 0
+    direction_of_movement = direction_of_movement1
+    amount_of_curve = amount_of_curve1
+    direction_of_turn = direction_of_turn1
+    amount_of_turn = amount_of_turn1
 
     try:
-        while i < number_of_loops:
+        while i < number_of_loops * 2:
             #move.grid_forward(0.2)
             if direction_of_movement == 0:
                 if amount_of_curve == 0:
@@ -70,12 +74,20 @@ def gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amou
             
             move.stop()
             image_count = 0
-            i += 1
             sharpness = 0.25 * amount_of_turn
+            
             if direction_of_turn == 0:
                 move.right(1, sharpness)
             elif direction_of_turn == 1:
                 move.left(1, sharpness)
+
+            move.stop()
+
+            direction_of_movement = direction_of_movement2
+            amount_of_curve = amount_of_curve2
+            direction_of_turn = direction_of_turn2
+            amount_of_turn = amount_of_turn2
+            i += 1
 
     finally:
         for i in range(len(captured_images)):
