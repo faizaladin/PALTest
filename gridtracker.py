@@ -18,7 +18,7 @@ def gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amou
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
     i = 0
-    
+
     try:
         while i < number_of_loops:
             #move.grid_forward(0.2)
@@ -71,8 +71,11 @@ def gridtracking(direction_of_movement, amount_of_curve, direction_of_turn, amou
             move.stop()
             image_count = 0
             i += 1
-            #NEED SOME KIND OF TURN HERE
-            #DIRECTION OF TURN AND AMOUNT OF TURN
+            sharpness = 0.25 * amount_of_turn
+            if direction_of_turn == 0:
+                move.right(1, sharpness)
+            elif direction_of_turn == 1:
+                move.left(1, sharpness)
 
     finally:
         for i in range(len(captured_images)):
