@@ -85,7 +85,8 @@ def detect_lime_green(image, region, rows, cols):
     return lime_green_coordinates
 
 grid_points = {}
-# Function to draw a grid of squares within a specified region of an image
+#Function to draw a grid of squares within a specified region of an image
+
 def draw_grid_within_region(image, region, rows, cols, radius=110):
     x1, y1, x2, y2 = region  # Region coordinates (top-left and bottom-right)
     region_height, region_width = y2 - y1, x2 - x1
@@ -259,8 +260,8 @@ def find_center_of_blue(robot_center, ret, img):
         #cv2.waitKey(0)  # Wait for any key press to close the window
 
     # Release the video capture object and close all windows
-    # cap.release()
-    # cv2.destroyAllWindows()
+    #cap.release()
+    #cv2.destroyAllWindows()
 
     return point_on_grid
 
