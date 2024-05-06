@@ -25,10 +25,10 @@ def reset():
                 break
             elif robot_info[1] > 90:
                 move.right(random.uniform(0.15, 0.4), 0.85)
-                move.stop()
+                #move.stop()
             else:
                 move.left(random.uniform(0.15, 0.4), 0.85)
-                move.stop()
+                #move.stop()
             time.sleep(2)
             print("checking")
             # cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
@@ -48,10 +48,10 @@ def reset():
             print(robot_info[1])
             if robot_info[1] > 94:
                 move.left(random.uniform(0.15, 0.4), 0.85)
-                move.stop()
+                #move.stop()
             elif robot_info[1] < 91:
                 move.right(random.uniform(0.15, 0.4), 0.85)
-                move.stop()
+                #move.stop()
             time.sleep(2)
             print("checking")
             # cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
