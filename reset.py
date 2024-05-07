@@ -7,7 +7,7 @@ import cv2
 
 def reset():
 
-    buffer_size = 20
+    buffer_size = 25
 
     # Initialize the camera
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
