@@ -132,3 +132,5 @@ def curve_right_while_forward1000():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
     right(0.2, 0.87) 
     forward(4, 0.2)   # 
+
+right(0.5, 1)
