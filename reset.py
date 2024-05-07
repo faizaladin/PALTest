@@ -24,10 +24,10 @@ def reset():
             if robot_info[1] < 5 or robot_info[1] > 355:
                 break
             elif robot_info[1] > 90:
-                move.right(random.uniform(0.15, 0.4), 0.85)
+                move.right(random.uniform(0.15, 0.4), 1)
                 move.stop()
             else:
-                move.left(random.uniform(0.15, 0.4), 0.85)
+                move.left(random.uniform(0.15, 0.4), 1)
                 move.stop()
             time.sleep(2)
             print("checking")
@@ -47,10 +47,10 @@ def reset():
         while robot_info[1] < 91 or robot_info[1] > 94:
             print(robot_info[1])
             if robot_info[1] > 94:
-                move.left(random.uniform(0.15, 0.4), 0.85)
+                move.left(random.uniform(0.15, 0.4), 1)
                 move.stop()
             elif robot_info[1] < 91:
-                move.right(random.uniform(0.15, 0.4), 0.85)
+                move.right(random.uniform(0.15, 0.4), 1)
                 move.stop()
             time.sleep(2)
             print("checking")
