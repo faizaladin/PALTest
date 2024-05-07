@@ -60,8 +60,8 @@ def reset():
         #     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
         #     ret, frame = cap.read()
         #     robot_info = testcamera.calculate_orientation(ret, frame)
-        # move.backward(8)
-        # move.stop()
+        move.backward(8)
+        move.stop()
 
     except KeyboardInterrupt:
         move.stop()
