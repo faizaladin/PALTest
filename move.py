@@ -22,6 +22,7 @@ def forward(num, en_value):
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
+    stop()
 
 def pos_right(num):
     ena.value = 0.87
@@ -133,4 +134,4 @@ def curve_right_while_forward1000():
     right(0.2, 0.87) 
     forward(4, 0.2)   # 
 
-left(1, 0.87)
+forward(1, 0.87)
