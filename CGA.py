@@ -15,8 +15,8 @@
 
 #17 bits total 
 
-import gridtracker
-import reset
+#import gridtracker
+#import reset
 import random
 import simulation
 
@@ -30,6 +30,7 @@ NUM_GENERATIONS = 50
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
+    grid_squares = [21, 22, 23, 24, 25, 20, 19, 18, 17, 16, 11, 12, 13, 14, 15, 10, 9, 8, 7, 6, 1, 2, 3, 4, 5]
     direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
     amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
     direction_of_turn_1 = individual[4]  # Bit 4: 0 - right, 1 - left
@@ -40,9 +41,16 @@ def fitness_function(individual):
     amount_of_turn_2 = int("".join(map(str, individual[12:14])), 2)  # Bits 12-13: Amount of turn
     number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
 
+    fitness = 0
     grids_hit = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
-    print(grids_hit)
-    return len(grids_hit)
+    #print(grids_hit)
+    for i in range(len(grid_squares)):
+        if grid_squares[i] in grids_hit:
+            fitness += 1
+        else:
+            break
+    
+    return fitness
 
 def punctuated_fitness_function(individual):
     # Decode the individual
@@ -95,8 +103,11 @@ def genetic_algorithm():
     population = generate_population(POPULATION_SIZE)
 
     for generation in range(NUM_GENERATIONS):
+        #print(f"generation: {generation}")
         # Evaluate fitness
         fitness_scores = [fitness_function(individual) for individual in population]
+
+        print(f"generation: {generation}", f"fitness score: {max(fitness_scores)}")
 
         # Select parents for crossover using roulette wheel selection
         selected_parents = roulette_selection(population, fitness_scores)
@@ -120,4 +131,4 @@ def genetic_algorithm():
 # print("Best Individual:", best_individual)
 # print("Fitness Score:", fitness_function(best_individual))
 
-fitness_function('10001100000010010')
+print(genetic_algorithm())

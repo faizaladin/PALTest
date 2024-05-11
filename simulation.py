@@ -770,29 +770,37 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
         
     
     # grids_hit.extend(curve_left_forward875(canvas))
-    draw_grid(canvas)
+    #draw_grid(canvas)
 
     # print(grids_hit)
     # print(robot_position)
-    root.mainloop()
+    #root.mainloop()
 
     return grids_hit
 
-def fitness_function(individual):
-    direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
-    amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
-    direction_of_turn_1 = individual[4]  # Bit 4: 0 - right, 1 - left
-    amount_of_turn_1 = int("".join(map(str, individual[5:7])), 2)  # Bits 5-6: Amount of turn
-    direction_of_movement_2 = individual[7]  # Bit 7: 0 - right, 1 - left
-    amount_of_curve_2 = int("".join(map(str, individual[8:11])), 2)  # Bits 8-10: Amount of curve for movement
-    direction_of_turn_2 = individual[11]  # Bit 11: 0 - right, 1 - left
-    amount_of_turn_2 = int("".join(map(str, individual[12:14])), 2)  # Bits 12-13: Amount of turn
-    number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
+# def fitness_function(individual):
+#     grid_squares = [21, 22, 23, 24, 25, 20, 19, 18, 17, 16, 11, 12, 13, 14, 15, 10, 9, 8, 7, 6, 1, 2, 3, 4, 5]
+#     direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
+#     amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
+#     direction_of_turn_1 = individual[4]  # Bit 4: 0 - right, 1 - left
+#     amount_of_turn_1 = int("".join(map(str, individual[5:7])), 2)  # Bits 5-6: Amount of turn
+#     direction_of_movement_2 = individual[7]  # Bit 7: 0 - right, 1 - left
+#     amount_of_curve_2 = int("".join(map(str, individual[8:11])), 2)  # Bits 8-10: Amount of curve for movement
+#     direction_of_turn_2 = individual[11]  # Bit 11: 0 - right, 1 - left
+#     amount_of_turn_2 = int("".join(map(str, individual[12:14])), 2)  # Bits 12-13: Amount of turn
+#     number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
 
-    grids_hit = start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
-    print(grids_hit)
-    return grids_hit
+#     fitness = 0
+#     grids_hit = start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
+#     print(grids_hit)
+#     for i in range(len(grid_squares)):
+#         if grid_squares[i] in grids_hit:
+#             fitness += 1
+#         else:
+#             break
+    
+#     return fitness
 
-fitness_function('11111010111001011')
+# print(fitness_function('11111011111001011'))
 # Example usage
 # start_simulation()
