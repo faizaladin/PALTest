@@ -18,6 +18,7 @@
 import gridtracker
 import reset
 import random
+import simulation
 
 # Define the gene sequence
 GENE_LENGTH = 17
@@ -29,6 +30,21 @@ NUM_GENERATIONS = 50
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
+    direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
+    amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
+    direction_of_turn_1 = individual[4]  # Bit 4: 0 - right, 1 - left
+    amount_of_turn_1 = int("".join(map(str, individual[5:7])), 2)  # Bits 5-6: Amount of turn
+    direction_of_movement_2 = individual[7]  # Bit 7: 0 - right, 1 - left
+    amount_of_curve_2 = int("".join(map(str, individual[8:11])), 2)  # Bits 8-10: Amount of curve for movement
+    direction_of_turn_2 = individual[11]  # Bit 11: 0 - right, 1 - left
+    amount_of_turn_2 = int("".join(map(str, individual[12:14])), 2)  # Bits 12-13: Amount of turn
+    number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
+
+    grids_hit = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
+    print(grids_hit)
+    return len(grids_hit)
+
+def punctuated_fitness_function(individual):
     # Decode the individual
     direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
     amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
