@@ -26,7 +26,7 @@ def gridtracking(direction_of_movement1, amount_of_curve1, direction_of_turn1, a
     try:
         while i < number_of_loops * 2:
             #move.grid_forward(0.2)
-            if direction_of_movement == 0:
+            if int(direction_of_movement) == 0:
                 if amount_of_curve == 0:
                     move.grid_forward(0.2)
                 elif amount_of_curve == 1:
@@ -74,11 +74,11 @@ def gridtracking(direction_of_movement1, amount_of_curve1, direction_of_turn1, a
             
             move.stop()
             image_count = 0
-            sharpness = 0.25 * amount_of_turn
+            sharpness = 0.25 * int(amount_of_turn)
             
-            if direction_of_turn == 0:
+            if int(direction_of_turn) == 0:
                 move.right(1, sharpness)
-            elif direction_of_turn == 1:
+            elif int(direction_of_turn) == 1:
                 move.left(1, sharpness)
 
             move.stop()
