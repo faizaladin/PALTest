@@ -15,8 +15,8 @@
 
 #17 bits total 
 
-#import gridtracker
-#import reset
+import gridtracker
+import reset
 import random
 import simulation
 
