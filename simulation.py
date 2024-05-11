@@ -747,9 +747,13 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
                 grids_hit.extend(curve_left_forward875(canvas))
             
         if int(direction_of_turn) == 0:
-            turn_right()
+            for x in range(int(amount_of_turn)):
+                #print("turning right")
+                turn_right()
         if int(direction_of_turn) == 1:
-            turn_left()
+            for z in range(int(amount_of_turn)):
+                #print("turning left")
+                turn_left()
 
         if i % 2 == 0:
             direction_of_movement = direction_of_movement1
@@ -789,6 +793,6 @@ def fitness_function(individual):
     print(grids_hit)
     return grids_hit
 
-fitness_function('11111110111001011')
+fitness_function('11111010111001011')
 # Example usage
 # start_simulation()
