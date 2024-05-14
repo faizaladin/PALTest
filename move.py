@@ -65,15 +65,19 @@ def curve_left_while_forward125():
     enb_value = 1
     ena.value = ena_value
     enb.value = enb_value
+    print("turning")
     motor_a.backward()
     motor_b.forward()
     while image_count < max_images_turn:
+        print("reading turn")
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
     image_count = 0
     grid_forward(0.2)
+    print("forward")
     while image_count < max_images_forward:
+        print("reading forward")
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
@@ -156,5 +160,5 @@ def curve_right_while_forward1000():
     right(0.2, 0.87) 
     forward(4, 0.2)   # 
 
-#curve_left_while_forward125()
-forward(5, 0.2)
+curve_left_while_forward125()
+#forward(5, 0.2)
