@@ -71,25 +71,27 @@ def curve_left_while_forward125():
     motor_a.backward()
     motor_b.forward()
     while image_count < max_images_turn:
-        print("reading turn")
+        #print("reading turn")
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
     image_count = 0
     grid_forward(0.2)
-    print("forward")
+    #print("forward")
     while image_count < max_images_forward:
-        print("reading forward")
+        #print("reading forward")
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
     stop()
     for i in range(len(captured_images)):
-            if i % 6 == 0:
+            if i % 2 == 0:
                 # Display the image
                 info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
-                print(info[0])
-                grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
+                #print(info[0])
+                grid = testcamera.point_in_grid(info[0], info[2])
+                print(info[0], grid)
+                grids_hit.append(grid)
                 # Delay for a short time (adjust as needed)
                 print(f"image {i} processed")
     print(grids_hit)
