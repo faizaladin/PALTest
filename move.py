@@ -54,7 +54,7 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
-    ena_value = 0.2
+    ena_value = 0.15
     enb_value = 1
     ena.value = ena_value
     enb.value = enb_value
