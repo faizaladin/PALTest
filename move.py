@@ -1,6 +1,7 @@
 from gpiozero import Motor, PWMOutputDevice
 import time
 import cv2
+import testcamera
 
 ena = PWMOutputDevice(12)
 enb = PWMOutputDevice(13)
@@ -54,6 +55,7 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
+    grids_hit = []
     image_count = 0
     max_images_turn = 30
     max_images_forward = 48
@@ -82,8 +84,17 @@ def curve_left_while_forward125():
         captured_images.append([ret, frame])
         image_count += 1
     stop()
-    print(len(captured_images))
-    return captured_images
+    for i in range(len(captured_images)):
+            if i % 15 == 0:
+                # Display the image
+                info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
+                print(info[0])
+                grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
+                # Delay for a short time (adjust as needed)
+                print(f"image {i} processed")
+    print(grids_hit)
+    return grids_hit
+
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
