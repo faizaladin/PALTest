@@ -22,6 +22,7 @@ def forward(num, ena_value, enb_value):
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
+    stop()
 
 def pos_right(num):
     ena.value = 0.87
@@ -54,7 +55,7 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
-    forward(3, 0.1, 1)  # Move forward for 1 second at 50% speed
+    forward(2, 0, 1)  # Move forward for 1 second at 50% speed
     # left(1.2, 0.87) 
     # forward(4, 0.2)   # 
 
