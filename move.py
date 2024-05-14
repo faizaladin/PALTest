@@ -57,7 +57,7 @@ def left(num, en_value):
 def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
-    max_images_turn = 30
+    max_images_turn = 40
     max_images_forward = 44
     buffer_size = 20
     captured_images = []
@@ -67,7 +67,7 @@ def curve_left_while_forward125():
     enb_value = 1
     ena.value = ena_value
     enb.value = enb_value
-    print("turning")
+    #print("turning")
     motor_a.backward()
     motor_b.forward()
     while image_count < max_images_turn:
