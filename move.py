@@ -55,7 +55,7 @@ def left(num, en_value):
 
 def curve_left_while_forward125():
     image_count = 0
-    max_images_turn = 40
+    max_images_turn = 30
     max_images_forward = 48
     buffer_size = 20
     captured_images = []
