@@ -59,7 +59,7 @@ def curve_left_while_forward125():
     image_count = 0
     max_images_turn = 30
     max_images_forward = 42
-    buffer_size = 72
+    buffer_size = 20
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
@@ -72,7 +72,7 @@ def curve_left_while_forward125():
     motor_b.forward()
     while image_count < max_images_turn:
         #print("reading turn")
-        ret, frame = cap.read()
+        ret, frame = cap.grab()
         captured_images.append([ret, frame])
         image_count += 1
     image_count = 0
