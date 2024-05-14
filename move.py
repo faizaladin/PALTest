@@ -86,7 +86,7 @@ def curve_left_while_forward125():
     stop()
     for i in range(len(captured_images)):
             if i % 6 == 0:
-                cv2.imshow(captured_images[i][1])
+                cv2.imwrite(f"Photo {i}", captured_images[i][1])
                 # Display the image
                 info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
                 print(info[0])
