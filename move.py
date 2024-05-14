@@ -1,5 +1,6 @@
 from gpiozero import Motor, PWMOutputDevice
 import time
+import cv2
 
 ena = PWMOutputDevice(12)
 enb = PWMOutputDevice(13)
@@ -21,7 +22,6 @@ def forward(num, en_value):
     enb.value = en_value
     motor_a.forward()
     motor_b.forward()
-    time.sleep(num)
 
 def pos_right(num):
     ena.value = 0.87
@@ -54,15 +54,32 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
+    image_count = 0
+    max_images_turn = 40
+    max_images_forward = 48
+    buffer_size = 20
+    captured_images = []
+    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+    cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
     ena_value = 0.25
     enb_value = 1
     ena.value = ena_value
     enb.value = enb_value
     motor_a.backward()
     motor_b.forward()
-    time.sleep(2)
-    forward(2.4, 0.2)
+    while image_count < max_images_turn:
+        ret, frame = cap.read()
+        captured_images.append([ret, frame])
+        image_count += 1
+    image_count = 0
+    grid_forward(0.2)
+    while image_count < max_images_forward:
+        ret, frame = cap.read()
+        captured_images.append([ret, frame])
+        image_count += 1
     stop()
+    print(len(captured_images))
+    return captured_images
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
