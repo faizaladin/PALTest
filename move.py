@@ -60,7 +60,10 @@ def curve_left_while_forward125():
     enb.value = enb_value
     motor_a.backward()
     motor_b.forward()
-    time.sleep(2)
+    time.sleep(1.5)
+    forward()
+    time.sleep(0.5)
+    stop()
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
