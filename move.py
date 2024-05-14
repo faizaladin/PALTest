@@ -58,7 +58,7 @@ def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
     max_images_turn = 30
-    max_images_forward = 40
+    max_images_forward = 42
     buffer_size = 20
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
@@ -86,7 +86,7 @@ def curve_left_while_forward125():
     stop()
     for i in range(len(captured_images)):
             if i % 6 == 0:
-                cv2.show(captured_images[i][1])
+                cv2.imshow(captured_images[i][1])
                 # Display the image
                 info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
                 print(info[0])
