@@ -140,4 +140,4 @@ def curve_right_while_forward1000():
     forward(4, 0.2)   # 
 
 #curve_left_while_forward125()
-forward(4.6, 0.2)
+forward(5, 0.2)
