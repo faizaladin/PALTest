@@ -18,7 +18,7 @@
 import gridtracker
 import reset
 import random
-import simulation
+import testsimulation
 
 # Define the gene sequence
 GENE_LENGTH = 17
@@ -42,7 +42,7 @@ def fitness_function(individual):
     number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
 
     fitness = 0
-    grids_hit = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
+    grids_hit = testsimulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
     #print(grids_hit)
     for i in range(len(grid_squares)):
         if grid_squares[i] in grids_hit:

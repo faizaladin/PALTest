@@ -16,9 +16,9 @@ def grid_forward(en_value):
     motor_a.forward()
     motor_b.forward()
 
-def forward(num, en_value):
-    ena.value = en_value
-    enb.value = en_value
+def forward(num, ena_value, enb_value):
+    ena.value = ena_value
+    enb.value = enb_value
     motor_a.forward()
     motor_b.forward()
     time.sleep(num)
@@ -54,9 +54,9 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    left(1.2, 0.87) 
-    forward(4, 0.2)   # 
+    forward(3, 0.1, 1)  # Move forward for 1 second at 50% speed
+    # left(1.2, 0.87) 
+    # forward(4, 0.2)   # 
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
@@ -132,3 +132,5 @@ def curve_right_while_forward1000():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
     right(0.2, 0.87) 
     forward(4, 0.2)   # 
+
+curve_left_while_forward125()
