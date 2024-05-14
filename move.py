@@ -61,8 +61,7 @@ def curve_left_while_forward125():
     motor_a.backward()
     motor_b.forward()
     time.sleep(1.5)
-    forward()
-    time.sleep(0.5)
+    forward(0.5, 0.2)
     stop()
 
 def curve_left_while_forward250():
