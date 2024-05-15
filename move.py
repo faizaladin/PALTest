@@ -79,7 +79,7 @@ def curve_left_while_forward125():
     image_count = 0
     # ret, frame = cap.read()
     # captured_images.append([ret, frame])
-    grid_forward(0.15)
+    grid_forward(0.17)
     #print("forward")
     while image_count < max_images_forward:
         #print("reading forward")
