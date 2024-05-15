@@ -57,7 +57,7 @@ def left(num, en_value):
 def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
-    max_images_turn = 55
+    max_images_turn = 54
     max_images_forward = 146
     buffer_size = 4
     captured_images = []
@@ -87,6 +87,9 @@ def curve_left_while_forward125():
         captured_images.append([ret, frame])
         image_count += 1
     stop()
+    for x in range(11):
+        ret, frame = cap.read()
+        captured_images.append([ret, frame])
     # ret, frame = cap.read()
     # captured_images.append([ret, frame])
     for i in range(len(captured_images)):
@@ -101,7 +104,6 @@ def curve_left_while_forward125():
                 print(f"image {i} processed")
     print(grids_hit)
     return grids_hit
-
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
