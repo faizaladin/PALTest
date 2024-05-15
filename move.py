@@ -63,7 +63,7 @@ def curve_left_while_forward125():
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)
-    cap.set( cv2.CAP_PROP_FPS, 30)
+    cap.set( cv2.CAP_PROP_FPS, 10)
     ena_value = 0.25
     enb_value = 1
     ena.value = ena_value
