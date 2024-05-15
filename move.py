@@ -55,6 +55,13 @@ def left(num, en_value):
     time.sleep(num)
     stop()
 
+def read_frames(cap, captured_images, max_images):
+    image_count = 0
+    while image_count < max_images:
+        ret, frame = cap.read()
+        captured_images.append([ret, frame])
+        image_count += 1
+
 def curve_left_while_forward125():
     grids_hit = []
     max_images_turn = 32
