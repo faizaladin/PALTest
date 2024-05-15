@@ -58,7 +58,7 @@ def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
     max_images_turn = 54
-    max_images_forward = 146
+    max_images_forward = 136
     buffer_size = 4
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
@@ -87,7 +87,7 @@ def curve_left_while_forward125():
         captured_images.append([ret, frame])
         image_count += 1
     stop()
-    for x in range(11):
+    for x in range(21):
         ret, frame = cap.read()
         captured_images.append([ret, frame])
     # ret, frame = cap.read()
