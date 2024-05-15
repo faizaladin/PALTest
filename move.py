@@ -58,49 +58,44 @@ def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
     max_images_turn = 54
-    max_images_forward = 136
-    buffer_size = 4
+    max_images_forward = 126
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)
     cap.set( cv2.CAP_PROP_FPS, 1)
     ena_value = 0.25
-    enb_value = 0.9
+    enb_value = 0.95
     ena.value = ena_value
     enb.value = enb_value
-    #print("turning")
+
     motor_a.backward()
     motor_b.forward()
     while image_count < max_images_turn:
-        #print("reading turn")
+
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
     image_count = 0
-    # ret, frame = cap.read()
-    # captured_images.append([ret, frame])
+
     grid_forward(0.17)
-    #print("forward")
+
     while image_count < max_images_forward:
-        #print("reading forward")
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
+    
     stop()
+
     for x in range(21):
         ret, frame = cap.read()
         captured_images.append([ret, frame])
-    # ret, frame = cap.read()
-    # captured_images.append([ret, frame])
+
     for i in range(len(captured_images)):
             if i % 10 == 0:
-                #cv2.imshow(f"Photo {i}", captured_images[i][1])
-                # Display the image
                 info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
                 print(info[0])
                 grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
                 print(grids_hit)
-                # Delay for a short time (adjust as needed)
                 print(f"image {i} processed")
     print(grids_hit)
     return grids_hit
