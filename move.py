@@ -56,54 +56,41 @@ def left(num, en_value):
 
 def curve_left_while_forward125():
     grids_hit = []
-    image_count = 0
     max_images_turn = 32
     max_images_forward = 46
-    buffer_size = 4
     captured_images = []
-    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
+    
+    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)
-    cap.set( cv2.CAP_PROP_FPS, 1)
+    cap.set(cv2.CAP_PROP_FPS, 1)
+    
     ena_value = 0.25
     enb_value = 1
     ena.value = ena_value
     enb.value = enb_value
-    #print("turning")
+
     motor_a.backward()
     motor_b.forward()
-    while image_count < max_images_turn:
-        #print("reading turn")
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-        image_count += 1
-        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
-    image_count = 0
-    # ret, frame = cap.read()
-    # captured_images.append([ret, frame])
-    grid_forward(0.2)
-    #print("forward")
-    while image_count < max_images_forward:
-        #print("reading forward")
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-        image_count += 1
-        cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+
+    thread_turn = threading.Thread(target=read_frames, args=(cap, captured_images, max_images_turn))
+    thread_forward = threading.Thread(target=read_frames, args=(cap, captured_images, max_images_forward))
+    thread_turn.start()
+    thread_forward.start()
+
+    thread_turn.join()
+    thread_forward.join()
+
     stop()
-    # ret, frame = cap.read()
-    # captured_images.append([ret, frame])
-    for i in range(len(captured_images)):
-            if i % 5 == 0:
-                #cv2.imshow(f"Photo {i}", captured_images[i][1])
-                # Display the image
-                info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
-                print(info[0])
-                grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
-                print(grids_hit)
-                # Delay for a short time (adjust as needed)
-                print(f"image {i} processed")
+
+    for i in range(0, len(captured_images), 5):
+        info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
+        print(info[0])
+        grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
+        print(grids_hit)
+        print(f"Image {i} processed")
+
     print(grids_hit)
     return grids_hit
-
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
