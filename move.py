@@ -57,7 +57,7 @@ def left(num, en_value):
 def curve_left_while_forward125():
     grids_hit = []
     image_count = 0
-    max_images_turn = 35
+    max_images_turn = 30
     max_images_forward = 46
     buffer_size = 4
     captured_images = []
@@ -77,6 +77,8 @@ def curve_left_while_forward125():
         captured_images.append([ret, frame])
         image_count += 1
     image_count = 0
+    ret, frame = cap.read()
+    captured_images.append([ret, frame])
     grid_forward(0.2)
     #print("forward")
     while image_count < max_images_forward:
@@ -85,6 +87,8 @@ def curve_left_while_forward125():
         captured_images.append([ret, frame])
         image_count += 1
     stop()
+    ret, frame = cap.read()
+    captured_images.append([ret, frame])
     for i in range(len(captured_images)):
             if i % 5 == 0:
                 #cv2.imshow(f"Photo {i}", captured_images[i][1])
