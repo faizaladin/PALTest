@@ -240,10 +240,10 @@ def curve_right_while_forward875():
     right(1.5, 1)
     stop()
 
-def curve_right_while_forward1000():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    right(0.2, 0.87) 
-    forward(4, 0.2)   # 
+def forward1000():
+    grid_forward(0.2)
+    time.sleep(4)
+    stop()
 
 #curve_left_while_forward250()
 #forward(5, 0.2)
