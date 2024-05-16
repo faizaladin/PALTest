@@ -15,13 +15,13 @@
 
 #17 bits total 
 
-import gridtracker
-import reset
+#import gridtracker
+#import reset
 import random
-import testsimulation
+import simulation
 
 # Define the gene sequence
-GENE_LENGTH = 17
+GENE_LENGTH = 16
 
 # Define the parameters for the genetic algorithm
 POPULATION_SIZE = 100
@@ -30,6 +30,7 @@ NUM_GENERATIONS = 50
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
+    # print(individual)
     grid_squares = [21, 22, 23, 24, 25, 20, 19, 18, 17, 16, 11, 12, 13, 14, 15, 10, 9, 8, 7, 6, 1, 2, 3, 4, 5]
     direction_of_movement_1 = individual[0]  # Bit 0: 0 - right, 1 - left
     amount_of_curve_1 = int("".join(map(str, individual[1:4])), 2)  # Bits 1-3: Amount of curve for movement
@@ -42,14 +43,17 @@ def fitness_function(individual):
     number_of_loops = int("".join(map(str, individual[14:17])), 2)  # Bits 14-16: Number of times to loop through
 
     fitness = 0
-    grids_hit = testsimulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
+    counter = 0
+    grids_hit = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
     #print(grids_hit)
     for i in range(len(grid_squares)):
+        #print(grids_hit)
         if grid_squares[i] in grids_hit:
             fitness += 1
-        else:
+        elif i != 0 and i % 5 == 0 and fitness % 5 != 0:
             break
-    
+
+    # print(fitness)
     return fitness
 
 def punctuated_fitness_function(individual):
@@ -131,4 +135,4 @@ def genetic_algorithm():
 # print("Best Individual:", best_individual)
 # print("Fitness Score:", fitness_function(best_individual))
 
-print(genetic_algorithm())
+genetic_algorithm()

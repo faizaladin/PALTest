@@ -6,7 +6,7 @@ import math
 grid_points = {}  # Define grid_points as a global variable
 grid_size = 5
 cell_size = 80
-robot_position = (220, 360)
+robot_position = (30, 370)
 robot_orientation = 280  # Initial orientation
 
 def generate_grid_points(grid_size=5, cell_size=80):
@@ -658,7 +658,7 @@ def curve_right_forward875(canvas):
             robot_position = (robot_position[0], grid_size - 1)
     return grids_hit
 
-def turn_left():
+def turn_left(num):
     global robot_orientation
     if robot_orientation == "up":
         robot_orientation = "left"
@@ -669,7 +669,7 @@ def turn_left():
     elif robot_orientation == "right":
         robot_orientation = "up"
 
-def turn_right():
+def turn_right(num):
     global robot_orientation
     if robot_orientation == "up":
         robot_orientation = "right"
@@ -737,13 +737,9 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
                 grids_hit.extend(curve_left_forward875(canvas))
             
         if int(direction_of_turn) == 0:
-            for x in range(int(amount_of_turn)):
-                #print("turning right")
-                turn_right()
+            turn_right(int(amount_of_turn))
         if int(direction_of_turn) == 1:
-            for z in range(int(amount_of_turn)):
-                #print("turning left")
-                turn_left()
+            turn_left(int(amount_of_turn))
 
         if i % 2 == 0:
             direction_of_movement = direction_of_movement1
@@ -760,7 +756,7 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
         
     
     # grids_hit.extend(curve_left_forward875(canvas))
-    draw_grid(canvas)
+    #draw_grid(canvas)
 
     # print(grids_hit)
     # print(robot_position)
