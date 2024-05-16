@@ -62,7 +62,7 @@ def curve_left_while_forward125():
     captured_images = []
     cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
     cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)
-    cap.set( cv2.CAP_PROP_FPS, 1)
+    cap.set( cv2.CAP_PROP_FPS, 60)
     ena_value = 0.25
     enb_value = 0.95
     ena.value = ena_value
@@ -71,7 +71,6 @@ def curve_left_while_forward125():
     motor_a.backward()
     motor_b.forward()
     while image_count < max_images_turn:
-
         ret, frame = cap.read()
         captured_images.append([ret, frame])
         image_count += 1
