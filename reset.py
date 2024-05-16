@@ -14,7 +14,7 @@ def reset():
 
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
-    move.curve_left_while_forward500()
+    move.curve_left_while_forward625()
 
     try:
         ret, frame = cap.read()
@@ -40,9 +40,9 @@ def reset():
 
         move.backward(5)
         move.stop()
-        move.forward(0.5, 0.5)
+        move.forward(0.25, 0.5)
         move.stop()
-        move.right(1.2, 0.87)
+        move.right(1.5, 0.87)
         # move.stop()
         # # print("working on turn")
         # cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
@@ -63,7 +63,7 @@ def reset():
         #     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
         #     ret, frame = cap.read()
         #     robot_info = testcamera.calculate_orientation(ret, frame)
-        move.backward(8)
+        move.backward(5)
         move.stop()
 
     except KeyboardInterrupt:
