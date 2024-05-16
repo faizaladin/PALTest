@@ -127,19 +127,19 @@ def curve_left_while_forward750():
     time.sleep(1.2)
     stop()  
 
-def curve_left_while_forward875():
-    ena_value = 0.5
-    enb_value = 1
-    ena.value = ena_value
-    enb.value = enb_value
-    motor_a.forward()
-    motor_b.forward()
-    time.sleep(1.3)
-    grid_forward(0.2)
-    time.sleep(1)
-    stop()  
+# def curve_left_while_forward875():
+#     ena_value = 0.5
+#     enb_value = 1
+#     ena.value = ena_value
+#     enb.value = enb_value
+#     motor_a.forward()
+#     motor_b.forward()
+#     time.sleep(1.3)
+#     grid_forward(0.2)
+#     time.sleep(1)
+#     stop()  
 
-def curve_left_while_forward950():
+def curve_left_while_forward875():
     ena_value = 0.8
     enb_value = 0.95
     ena.value = ena_value
@@ -157,39 +157,88 @@ def curve_left_while_forward1000():
     forward(4, 0.2)   # 
 
 def curve_right_while_forward125():
-    forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    right(1.2, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.25
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.backward()
+    time.sleep(2.3)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop()  # 
 
 def curve_right_while_forward250():
-    forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    right(1.05, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.25
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.backward()
+    time.sleep(2.1)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop()   # 
 
 def curve_right_while_forward375():
-    forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    right(0.95, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.25
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.backward()
+    time.sleep(1.9)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop() 
 
 def curve_right_while_forward500():
-    forward(0.25, 0.5)  # Move forward for 1 second at 50% speed
-    right(0.80, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.25
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.backward()
+    time.sleep(1.7)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop() 
 
 def curve_right_while_forward625():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    right(0.65, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.25
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.backward()
+    time.sleep(1.5)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop() 
 
 def curve_right_while_forward750():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    right(0.50, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 1
+    enb_value = 0.1
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.forward()
+    time.sleep(1.3)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop()  
 
 def curve_right_while_forward875():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    right(0.35, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.95
+    enb_value = 0.8
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.forward()
+    time.sleep(1.4)
+    stop()  
+    right(1.5, 1)
+    stop()
 
 def curve_right_while_forward1000():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
