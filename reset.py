@@ -40,7 +40,7 @@ def reset():
 
         move.backward(8)
         move.stop()
-        move.forward(0.3, 0.5)
+        move.forward(0.3, 0.25)
         move.stop()
         move.right(1.2, 0.87)
         # move.stop()
