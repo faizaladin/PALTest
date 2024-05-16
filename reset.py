@@ -23,7 +23,11 @@ def reset():
         while robot_info[1] > 5 and robot_info[1] < 355:
             #robot_info = testcamera.calculate_orientation(ret, frame)
             print(robot_info[1])
-            if robot_info[1] < 5 or robot_info[1] > 355:
+            if robot_info[1] < 5:
+                print("less than 5")
+                break
+            if robot_info[1] > 355:
+                print("more than 355")
                 break
             if robot_info[1] <= 180:
                 print("less than 180")
