@@ -14,7 +14,7 @@ def reset():
 
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
-    move.curve_left_while_forward875()
+    move.curve_left_while_forward950()
 
     try:
         ret, frame = cap.read()
@@ -42,7 +42,7 @@ def reset():
         move.stop()
         move.forward(0.7, 0.3)
         move.stop()
-        move.right(1.6, 0.87)
+        move.right(2, 0.87)
         # move.stop()
         # # print("working on turn")
         # cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
