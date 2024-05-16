@@ -170,8 +170,8 @@ def curve_right_while_forward1000():
     right(0.2, 0.87) 
     forward(4, 0.2)   # 
 
-forward(1, 0.25)
+forward(0.5, 0.25)
 stop()
-#right(2, 0.5)
+right(1, 0.87)
 #curve_left_while_forward250()
 #forward(5, 0.2)
