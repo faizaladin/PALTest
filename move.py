@@ -61,7 +61,7 @@ def curve_left_while_forward125():
     enb.value = enb_value
     motor_a.backward()
     motor_b.forward()
-    time.sleep(2.2)
+    time.sleep(2.3)
     grid_forward(0.2)
     time.sleep(1.2)
     stop()
