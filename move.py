@@ -172,6 +172,6 @@ def curve_right_while_forward1000():
 
 forward(0.5, 0.25)
 stop()
-right(1, 0.87)
+right(1.5, 0.87)
 #curve_left_while_forward250()
 #forward(5, 0.2)
