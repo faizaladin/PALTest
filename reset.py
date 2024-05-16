@@ -14,7 +14,7 @@ def reset():
 
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
-    move.curve_left_while_forward250()
+    move.curve_left_while_forward375()
 
     try:
         ret, frame = cap.read()
@@ -39,7 +39,8 @@ def reset():
             robot_info = testcamera.calculate_orientation(ret, frame)
 
         move.backward(8)
-        move.forward(0.3, 0.25)
+        move.stop()
+        move.forward(0.3, 0.5)
         move.stop()
         move.right(1.2, 0.87)
         # move.stop()
