@@ -140,13 +140,13 @@ def curve_left_while_forward875():
     stop()  
 
 def curve_left_while_forward950():
-    ena_value = 0.5
+    ena_value = 0.6
     enb_value = 0.95
     ena.value = ena_value
     enb.value = enb_value
     motor_a.forward()
     motor_b.forward()
-    time.sleep(2.2)
+    time.sleep(1.2)
     stop()  
     left(2, 0.87)
     stop()
