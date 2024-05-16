@@ -128,9 +128,16 @@ def curve_left_while_forward750():
     stop()  
 
 def curve_left_while_forward875():
-    forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
-    left(0.35, 0.87) 
-    forward(4, 0.2)   # 
+    ena_value = 0.5
+    enb_value = 1
+    ena.value = ena_value
+    enb.value = enb_value
+    motor_a.forward()
+    motor_b.forward()
+    time.sleep(1.3)
+    grid_forward(0.2)
+    time.sleep(1.2)
+    stop()  
 
 def curve_left_while_forward1000():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
