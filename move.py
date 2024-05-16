@@ -55,49 +55,16 @@ def left(num, en_value):
     stop()
 
 def curve_left_while_forward125():
-    grids_hit = []
-    image_count = 0
-    max_images_turn = 54
-    max_images_forward = 126
-    captured_images = []
-    cap = cv2.VideoCapture('rtsp://admin:123456@136.244.195.47:554/Streaming/channels/0')  # Use 0 for the default camera
-    cap.set(cv2.CAP_PROP_BUFFERSIZE, 0)
-    cap.set( cv2.CAP_PROP_FPS, 60)
     ena_value = 0.25
     enb_value = 0.95
     ena.value = ena_value
     enb.value = enb_value
-
     motor_a.backward()
     motor_b.forward()
-    while image_count < max_images_turn:
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-        image_count += 1
-    image_count = 0
-
-    grid_forward(0.17)
-
-    while image_count < max_images_forward:
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-        image_count += 1
-    
+    time.sleep(2)
+    grid_forward(0.2)
+    time.sleep(2.2)
     stop()
-
-    for x in range(21):
-        ret, frame = cap.read()
-        captured_images.append([ret, frame])
-
-    for i in range(len(captured_images)):
-            if i % 10 == 0:
-                info = testcamera.calculate_orientation(captured_images[i][0], captured_images[i][1])
-                print(info[0])
-                grids_hit.append(testcamera.point_in_grid(info[0], info[2]))
-                print(grids_hit)
-                print(f"image {i} processed")
-    print(grids_hit)
-    return grids_hit
 
 def curve_left_while_forward250():
     forward(0.25, 0.2)  # Move forward for 1 second at 50% speed
