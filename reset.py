@@ -14,7 +14,7 @@ def reset():
 
     cap.set(cv2.CAP_PROP_BUFFERSIZE, buffer_size)
 
-    move.curve_left_while_forward625()
+    move.curve_left_while_forward750()
 
     try:
         ret, frame = cap.read()
