@@ -136,7 +136,7 @@ def curve_left_while_forward875():
     motor_b.forward()
     time.sleep(1.3)
     grid_forward(0.2)
-    time.sleep(1.2)
+    time.sleep(1)
     stop()  
 
 def curve_left_while_forward1000():
