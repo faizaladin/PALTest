@@ -50,7 +50,7 @@ def fitness_function(individual):
         #print(grids_hit)
         if grid_squares[i] in grids_hit:
             fitness += 1
-        elif i != 0 and i % 5 == 0 and fitness % 5 != 0:
+        if i != 0 and i % 5 == 0 and fitness % 5 != 0:
             break
 
     # print(fitness)
