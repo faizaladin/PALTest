@@ -242,7 +242,7 @@ def curve_right_while_forward875():
 
 def forward1000():
     grid_forward(0.2)
-    time.sleep(4)
+    time.sleep(5)
     stop()
 
 #curve_left_while_forward250()
