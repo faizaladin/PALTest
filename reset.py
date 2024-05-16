@@ -26,6 +26,7 @@ def reset():
             if robot_info[1] < 5 or robot_info[1] > 355:
                 break
             if robot_info[1] <= 180:
+                print("less than 180")
                 move.left(random.uniform(0.15, 0.4), 0.87)
                 move.stop()
             else:
