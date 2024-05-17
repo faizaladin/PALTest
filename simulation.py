@@ -4,9 +4,11 @@ import time
 import math
 
 grid_points = {}  # Define grid_points as a global variable
+robot_positions = [] 
 grid_size = 5
 cell_size = 80
-robot_position = (30, 370, 30)
+robot_position = [30, 370, 30]
+robot_position.append(robot_position)
 #robot_position = (370, 370, 30)
 robot_orientation = 90 # Initial orientation
 #robot_orientation = 270
@@ -69,6 +71,7 @@ def forward(canvas, distance):
     grids_hit = []
     global grid_points
     global robot_position
+    global robot_positions
     global robot_orientation
     global edge_point
     global max_x
@@ -83,7 +86,7 @@ def forward(canvas, distance):
         # Calculate the movement components
         delta_x = step * math.sin(math.radians(robot_orientation))  # Switched sin and cos
         delta_y = -step * math.cos(math.radians(robot_orientation))  # Switched sin and cos
-
+        robot_positions.append(robot_position)
         # Update the robot's position
         robot_position = (robot_position[0] + delta_x, robot_position[1] + delta_y, robot_position[2])
         edge_point = (edge_point[0] + delta_x, edge_point[1] + delta_y)
@@ -92,32 +95,35 @@ def forward(canvas, distance):
             end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
             end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
             edge_point = (end_x, end_y)
+            robot_positions.append(robot_position)
             return grids_hit
         if (edge_point[0] < 0):
             robot_position = (robot_position[2], robot_position[1], robot_position[2])
             end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
             end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
             edge_point = (end_x, end_y)
+            robot_positions.append(robot_position)
             return grids_hit
         if (edge_point[1] < 0):
             robot_position = (robot_position[0], robot_position[2], robot_position[2])
             end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
             end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
             edge_point = (end_x, end_y)
+            robot_positions.append(robot_position)
             return grids_hit
         if (edge_point[1] > max_y):
             robot_position = (robot_position[0], max_y - (robot_position[1]-max_y), robot_position[2])
             end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
             end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
             edge_point = (end_x, end_y)
+            robot_positions.append(robot_position)
             return grids_hit
         # Redraw the grid with the new position
         # canvas.delete("all")  # Clear the canvas
         # draw_grid(canvas)
-        
         # Update the current step
         curr_step += step
-        
+        robot_positions.append(robot_position)
         # Update the canvas to visualize each step
         # canvas.update()
         # time.sleep(0.1)  # Adjust the sleep duration as needed
@@ -994,12 +1000,14 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
     global robot_orientation
     global robot_position
     global edge_point
+    global robot_positions
     root = tk.Tk()
     generate_grid_points(grid_size, cell_size)
     canvas = tk.Canvas(root, width=grid_size*cell_size, height=grid_size*cell_size)
     canvas.pack()
     draw_grid(canvas)
-    robot_position = (30, 370, 30)
+    robot_position = [30, 370, 30]
+    robot_positions.append(robot_position)
     #robot_position = (370, 370, 30)
     robot_orientation = 90 # Initial orientation
     #robot_orientation = 270
@@ -1017,7 +1025,7 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
     loops = int(number_of_loops)
     i = 1
     
-    while (i < loops * 2):
+    while (i < loops):
         if direction_of_movement == 0:
             if amount_of_curve == 7:
                 grids_hit.extend(curve_right_forward875(canvas))
@@ -1071,7 +1079,12 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
             amount_of_curve = int(amount_of_curve1)
             direction_of_turn = int(direction_of_turn1)
             amount_of_turn = int(amount_of_turn1)
-        
         i+=1
-    return grids_hit
+    
+    robot_positions = []
+    robot_position = [30, 370, 30]
+    canvas.delete("all")
+    root.destroy()
+    robot_orientation = 90 # Initial orientation
+    return grids_hit, robot_positions
 

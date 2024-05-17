@@ -19,14 +19,18 @@
 #import reset
 import random
 import simulation
+import tkinter as tk
+import random
+import time
+import math
 
 # Define the gene sequence
-GENE_LENGTH = 16
+GENE_LENGTH = 17
 
 # Define the parameters for the genetic algorithm
 POPULATION_SIZE = 100
 MUTATION_RATE = 0.01
-NUM_GENERATIONS = 50
+NUM_GENERATIONS = 10
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
@@ -44,8 +48,7 @@ def fitness_function(individual):
 
     fitness = 0
     counter = 0
-    grids_hit = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
-    #print(grids_hit)
+    grids_hit, robot_positions = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
     for i in range(len(grid_squares)):
         #print(grids_hit)
         if grid_squares[i] in grids_hit:
@@ -54,7 +57,7 @@ def fitness_function(individual):
             break
 
     # print(fitness)
-    return fitness
+    return fitness, robot_positions
 
 def punctuated_fitness_function(individual):
     # Decode the individual
@@ -102,20 +105,38 @@ def roulette_selection(population, fitness_scores):
     selected_parents = random.choices(population, weights=probabilities, k=POPULATION_SIZE)
     return selected_parents
 
+def draw_points(points):
+    drawn_points = []
+    for i in range(len(points)):
+        x = points[i][0]
+        y = points[i][1]
+        canvas.create_oval(x-3, y-3, x+3, y+3, fill='black')  # Adjust the size of the point as needed
+        drawn_points.append((x, y))
+            
+    # Draw lines between consecutive drawn points
+    for i in range(len(drawn_points)-1):
+        x1, y1 = drawn_points[i]
+        x2, y2 = drawn_points[i+1]
+        canvas.create_line(x1, y1, x2, y2, fill='blue')  # Adjust the color as needed
+
+
 # Genetic algorithm main function
 def genetic_algorithm():
     population = generate_population(POPULATION_SIZE)
-
     for generation in range(NUM_GENERATIONS):
+        fitness_scores = []
+        all_positions = []
         #print(f"generation: {generation}")
         # Evaluate fitness
-        fitness_scores = [fitness_function(individual) for individual in population]
-
+        for i in range(len(population)):
+            fitness, robot_positions = fitness_function(population[i])
+            fitness_scores.append(fitness)
+            all_positions.append(robot_positions)
+        #fitness_scores = [fitness_function(individual) for individual in population]
         print(f"generation: {generation}", f"fitness score: {max(fitness_scores)}")
 
         # Select parents for crossover using roulette wheel selection
         selected_parents = roulette_selection(population, fitness_scores)
-
         # Create next generation
         next_generation = []
         for i in range(0, POPULATION_SIZE, 2):
@@ -129,10 +150,36 @@ def genetic_algorithm():
         population = next_generation
 
     # Return the best individual found
-    return max(population, key=fitness_function)
+    best_fitness_score = 0
+    for x in range(len(population)):
+            fitness, robot_positions = fitness_function(population[x])
+            fitness_scores.append(fitness)
+            all_positions.append(robot_positions)
+            # Track the best individual
+            if fitness > best_fitness_score:
+                best_fitness_score = fitness
+                best_individual_index = x
 
+    list_of_points = all_positions[best_individual_index]
+    return list_of_points
+
+def destroy_all_windows():
+    # Loop through all tkinter windows
+    for window in tk._default_root.children.values():
+        # Destroy the window
+        window.destroy()
 # best_individual = genetic_algorithm()
 # print("Best Individual:", best_individual)
 # print("Fitness Score:", fitness_function(best_individual))
 
-genetic_algorithm()
+root = tk.Tk()
+destroy_all_windows()
+root.title("Draw Points")
+
+# Create a canvas widget
+canvas = tk.Canvas(root, width=800, height=600, bg='white')
+canvas.pack()
+canvas.delete("all")
+list_of_points = genetic_algorithm()
+draw_points(list_of_points)
+root.mainloop()
