@@ -30,7 +30,7 @@ GENE_LENGTH = 17
 # Define the parameters for the genetic algorithm
 POPULATION_SIZE = 100
 MUTATION_RATE = 0.01
-NUM_GENERATIONS = 10
+NUM_GENERATIONS = 100
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
@@ -175,11 +175,25 @@ def destroy_all_windows():
 root = tk.Tk()
 destroy_all_windows()
 root.title("Draw Points")
-
-# Create a canvas widget
-canvas = tk.Canvas(root, width=800, height=600, bg='white')
+grid_size = 5
+cell_size = 80
+canvas = tk.Canvas(root, width=grid_size*cell_size, height=grid_size*cell_size)
 canvas.pack()
-canvas.delete("all")
+count = 1
+for i in range(grid_size):
+        for j in range(grid_size):
+            x0, y0 = j * cell_size, i * cell_size
+            x1, y1 = x0 + cell_size, y0 + cell_size
+            canvas.create_rectangle(x0, y0, x1, y1, fill="white", outline="black")
+            x_center = (x0 + x1) / 2
+            y_center = (y0 + y1) / 2
+            canvas.create_text(x_center, y_center, text=str(count), fill="red")
+            count += 1
+            
+# Create a canvas widget
+# canvas = tk.Canvas(root, width=800, height=600, bg='white')
+# canvas.pack()
+# canvas.delete("all")
 list_of_points = genetic_algorithm()
 draw_points(list_of_points)
 root.mainloop()
