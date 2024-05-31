@@ -18,14 +18,18 @@ max_x = grid_size * cell_size
 min_y = 0
 max_y = grid_size * cell_size
 
-def generate_grid_points(grid_size=5, cell_size=80):
+def generate_grid_points(grid_size=5, cell_size=80, radius=35):
     global grid_points  # Use the global grid_points variable
     count = 1
     for i in range(grid_size):
         for j in range(grid_size):
-            x0, y0 = j * cell_size, i * cell_size
-            x1, y1 = x0 + cell_size, y0 + cell_size
-            points = set((x, y) for x in range(x0, x1) for y in range(y0, y1))
+            center_x = j * cell_size + cell_size // 2
+            center_y = i * cell_size + cell_size // 2
+            points = set()
+            for x in range(j * cell_size, (j + 1) * cell_size):
+                for y in range(i * cell_size, (i + 1) * cell_size):
+                    if math.sqrt((x - center_x) ** 2 + (y - center_y) ** 2) <= radius:
+                        points.add((x, y))
             grid_points[count] = points
             count += 1
 
@@ -144,66 +148,28 @@ def curve_left_forward125(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjust
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-        robot_orientation = 360
+    turn = 0
+    while turn < 6:
+        robot_orientation -= 14
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 210))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 250)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward250(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -211,66 +177,28 @@ def curve_left_forward250(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    while turn < 8:
+        robot_orientation -= 10
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 110))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 130)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward375(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -278,67 +206,28 @@ def curve_left_forward375(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    grids_hit.extend(forward(canvas, 60))
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    while turn < 9:
+        robot_orientation -= 8
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 110))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 130)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward500(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -346,67 +235,32 @@ def curve_left_forward500(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    grids_hit.extend(forward(canvas, 70))
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 10:
+        robot_orientation -= 8
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 30))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward625(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -414,67 +268,32 @@ def curve_left_forward625(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    grids_hit.extend(forward(canvas, 140))
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 150)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 11:
+        robot_orientation -= 8
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 40))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward750(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -482,67 +301,32 @@ def curve_left_forward750(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    grids_hit.extend(forward(canvas, 170))
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 170)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 10:
+        robot_orientation -= 8
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    #grids_hit.extend(forward(canvas, 10))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 40)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_left_forward875(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -550,65 +334,28 @@ def curve_left_forward875(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation - 90
-    grids_hit.extend(forward(canvas, 250))
-    #print(robot_position)
-    if robot_orientation < 90:
-        normalized_point = 360 + forward_point
-        while robot_orientation > 0:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 360
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 300)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 3:
+        robot_orientation -= 30
+        if robot_orientation <= 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation > 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation > normalized_point:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation > forward_point:
-            robot_orientation -= 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    #grids_hit.extend(forward(canvas, 10))
-    #print(robot_position)
+        temp_grids, hit_edge = forward(canvas, 10)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    grids_hit.extend(temp_grids)
+    temp_grids, hit_edge = forward(canvas, 30)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_1000(canvas):
@@ -617,12 +364,14 @@ def curve_1000(canvas):
     global grid_points
     global robot_position
     global robot_orientation
-    temp_grids, hit_edge = forward(canvas, 330)
+    temp_grids, hit_edge = forward(canvas, 310)
     grids_hit.extend(temp_grids)
+    #print(grids_hit, hit_edge)
     return grids_hit, hit_edge
 
 def curve_right_forward125(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -630,66 +379,28 @@ def curve_right_forward125(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    while turn < 6:
+        robot_orientation += 14
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 17
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 210))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 250)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward250(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -697,66 +408,28 @@ def curve_right_forward250(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    while turn < 8:
+        robot_orientation += 10
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 110))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 130)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward375(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -764,67 +437,28 @@ def curve_right_forward375(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    grids_hit.extend(forward(canvas, 60))
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    while turn < 9:
+        robot_orientation += 8
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 110))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 130)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward500(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -832,67 +466,32 @@ def curve_right_forward500(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    grids_hit.extend(forward(canvas, 70))
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 10:
+        robot_orientation += 8
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 11
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 30))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward625(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -900,67 +499,32 @@ def curve_right_forward625(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    grids_hit.extend(forward(canvas, 140))
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 150)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 11:
+        robot_orientation += 8
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 12
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    grids_hit.extend(forward(canvas, 40))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 100)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward750(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -968,67 +532,32 @@ def curve_right_forward750(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    grids_hit.extend(forward(canvas, 170))
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 170)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 10:
+        robot_orientation += 8
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    #grids_hit.extend(forward(canvas, 40))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    temp_grids, hit_edge = forward(canvas, 40)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def curve_right_forward875(canvas):
     grids_hit = []
+    temp_grids = []
     hit_edge = False
     global grid_points
     global robot_position
@@ -1036,63 +565,28 @@ def curve_right_forward875(canvas):
     global edge_point
     global max_x
     global max_y
-    forward_point = robot_orientation + 90
-    grids_hit.extend(forward(canvas, 250))
-    if robot_orientation > 270:
-        normalized_point = forward_point - 360
-        while robot_orientation < 360:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = 0
+    turn = 0
+    temp_grids, hit_edge = forward(canvas, 300)
+    grids_hit.extend(temp_grids)
+    if hit_edge == True:
+            return grids_hit, hit_edge
+    while turn < 3:
+        robot_orientation += 30
+        if robot_orientation < 0:
+            robot_orientation = 360 + robot_orientation
+        elif robot_orientation >= 360:
+            robot_orientation = robot_orientation - 360
         end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
         end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
         edge_point = (end_x, end_y)
-        while robot_orientation < normalized_point:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = normalized_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    else:
-        while robot_orientation < 360:
-            robot_orientation += 15
-            end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-            end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-            edge_point = (end_x, end_y)
-            temp_grids, hit_edge = forward(canvas, 20)
-            grids_hit.extend(temp_grids)
-            if hit_edge == True:
-                return grids_hit, hit_edge
-            # canvas.delete("all")  # Clear the canvas
-            # draw_grid(canvas)
-            # canvas.update()
-            # time.sleep(0.1)  # Adjus
-        robot_orientation = forward_point
-        end_x = robot_position[0] + robot_position[2] * math.sin(math.radians(robot_orientation))
-        end_y = robot_position[1] - robot_position[2] * math.cos(math.radians(robot_orientation))  # Negative because y-axis is inverted in tkinter
-        edge_point = (end_x, end_y)
-    #grids_hit.extend(forward(canvas, 40))
+        temp_grids, hit_edge = forward(canvas, 20)
+        grids_hit.extend(temp_grids)
+        if hit_edge == True:
+            return grids_hit, hit_edge
+        turn += 1
+    grids_hit.extend(temp_grids)
+    temp_grids, hit_edge = forward(canvas, 30)
+    grids_hit.extend(temp_grids)
     return grids_hit, hit_edge
 
 def turn_left(num):
@@ -1155,7 +649,9 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
     canvas = tk.Canvas(root, width=grid_size*cell_size, height=grid_size*cell_size)
     canvas.pack()
     draw_grid(canvas)
+    robot_positions = []
     robot_position = [30, 370, 30]
+    robot_orientation = 90
     robot_positions.append(robot_position)
     #robot_position = (370, 370, 30)
     robot_orientation = 90 # Initial orientation
@@ -1175,8 +671,7 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
     amount_of_turn = int(amount_of_turn1)
     loops = int(number_of_loops)
     i = 1
-    
-    while (i < loops):
+    while (i < loops*2):
         if direction_of_movement == 0:
             if amount_of_curve == 7:
                 temp_grids, hit_edge = curve_right_forward875(canvas)
@@ -1246,11 +741,8 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
                 temp_grids = []
 
         if hit_edge == True:
-            robot_positions = []
-            robot_position = [30, 370, 30]
             canvas.delete("all")
             root.destroy()
-            robot_orientation = 90 # Initial orientation
             return grids_hit, robot_positions
         
         if direction_of_turn == 0:
@@ -1272,10 +764,22 @@ def start_simulation(direction_of_movement1, amount_of_curve1, direction_of_turn
             amount_of_turn = int(amount_of_turn1)
         i+=1
     
-    robot_positions = []
-    robot_position = [30, 370, 30]
     canvas.delete("all")
     root.destroy()
     robot_orientation = 90 # Initial orientation
     return grids_hit, robot_positions
 
+# print("ehllo")
+# root = tk.Tk()
+# generate_grid_points(grid_size, cell_size)
+# canvas = tk.Canvas(root, width=grid_size*cell_size, height=grid_size*cell_size)
+# canvas.pack()
+# draw_grid(canvas)
+# robot_position = [30, 370, 30]
+# robot_positions.append(robot_position)
+# curve_left_forward875(canvas)
+# turn_left(3)
+# curve_right_forward875(canvas)
+# turn_right(3)
+# curve_left_forward875(canvas)
+# root.mainloop()

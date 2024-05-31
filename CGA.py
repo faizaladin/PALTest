@@ -30,7 +30,7 @@ GENE_LENGTH = 17
 # Define the parameters for the genetic algorithm
 POPULATION_SIZE = 100
 MUTATION_RATE = 0.01
-NUM_GENERATIONS = 100
+NUM_GENERATIONS = 5
 
 # Define the fitness function (you should customize this for your specific problem)
 def fitness_function(individual):
@@ -48,14 +48,18 @@ def fitness_function(individual):
 
     fitness = 0
     counter = 0
+    benchmark = 5
     grids_hit, robot_positions = simulation.start_simulation(direction_of_movement_1, amount_of_curve_1, direction_of_turn_1, amount_of_turn_1, direction_of_movement_2, amount_of_curve_2, direction_of_turn_2, amount_of_turn_2, number_of_loops)
+    # print(robot_positions)
     for i in range(len(grid_squares)):
-        #print(grids_hit)
-        if grid_squares[i] in grids_hit:
-            fitness += 1
-        if i != 0 and i % 5 == 0 and fitness % 5 != 0:
+        # print(i, fitness, benchmark)
+        if i != 0 and i % 5 == 0 and fitness % 5 != 0 and fitness < benchmark:
+            # print(grids_hit, fitness)
             break
-
+        if grid_squares[i] in grids_hit:
+             fitness += 1
+        if fitness == benchmark:
+            benchmark += 5
     # print(fitness)
     return fitness, robot_positions
 
@@ -134,9 +138,11 @@ def genetic_algorithm():
             all_positions.append(robot_positions)
         #fitness_scores = [fitness_function(individual) for individual in population]
         print(f"generation: {generation}", f"fitness score: {max(fitness_scores)}")
-
         # Select parents for crossover using roulette wheel selection
         selected_parents = roulette_selection(population, fitness_scores)
+        
+        if generation == NUM_GENERATIONS - 1:
+            break
         # Create next generation
         next_generation = []
         for i in range(0, POPULATION_SIZE, 2):
@@ -151,16 +157,22 @@ def genetic_algorithm():
 
     # Return the best individual found
     best_fitness_score = 0
+    best_fit_index = 0
+    fitness_scores = []
+    robot_positions = []
+    all_positions = []
     for x in range(len(population)):
             fitness, robot_positions = fitness_function(population[x])
             fitness_scores.append(fitness)
             all_positions.append(robot_positions)
             # Track the best individual
-            if fitness > best_fitness_score:
-                best_fitness_score = fitness
-                best_individual_index = x
-
-    list_of_points = all_positions[best_individual_index]
+    # print(len(fitness_scores), len(all_positions))
+    for z in range(len(fitness_scores)):
+        if fitness_scores[z] > best_fitness_score:
+            best_fitness_score = fitness_scores[z]
+            best_fit_index = z
+            # print(best_fitness_score, best_fit_index, population[best_fit_index])
+    list_of_points = all_positions[best_fit_index]
     return list_of_points
 
 def destroy_all_windows():
@@ -194,6 +206,7 @@ for i in range(grid_size):
 # canvas = tk.Canvas(root, width=800, height=600, bg='white')
 # canvas.pack()
 # canvas.delete("all")
+# fitness_function('11100001100101111')
 list_of_points = genetic_algorithm()
 draw_points(list_of_points)
 root.mainloop()
